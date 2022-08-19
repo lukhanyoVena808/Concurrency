@@ -1,6 +1,11 @@
 package typingTutor;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+/*
+ * Updated the class by making all functions synchronized, including run method
+ */
 
 //Thread to monitor the word that has been typed.
 public class CatchWord extends Thread {
@@ -21,27 +26,33 @@ public class CatchWord extends Thread {
 		noWords = words.length;
 	}
 	
-	public static void setScore(Score sharedScore) {
+	public static synchronized void setScore(Score sharedScore) {
 		score=sharedScore;
 	}
 	
-	public static void setFlags(AtomicBoolean d, AtomicBoolean p) {
+	public static synchronized void setFlags(AtomicBoolean d, AtomicBoolean p) {
 		done=d;
 		pause=p;
 	}
 	
 	public void run() {
 		int i=0;
+		Arrays.sort(words, CatchWord::compare); //sort array
 		while (i<noWords) {		
-			while(pause.get()) {};
-			if (words[i].matchWord(target)) {
-				System.out.println( " score! '" + target); //for checking
-				score.caughtWord(target.length());	
-				//FallingWord.increaseSpeed();
-				break;
-			}
+			// while(pause.get()) {}// when game is paused,
+				if (words[i].matchWord(target) && !pause.get()) {
+					System.out.println( " score! '" + target); //for checking
+					score.caughtWord(target.length());	
+					//FallingWord.increaseSpeed();
+					break;
+				}
+			
 		   i++;
-		}
-		
-	}	
+		}		
+	}
+	
+	//Compare Method
+	public static int compare(FallingWord a, FallingWord b) {
+	return a.getWord().compareTo(b.getWord());
+}
 }

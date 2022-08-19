@@ -5,6 +5,7 @@ public class FallingWord {
 	private int x; //position - width
 	private int y; // postion - height
 	private int maxY; //maximum height
+	private int maxX; //maximum height
 	private boolean dropped; //flag for if user does not manage to catch word in time
 	
 	private int fallingSpeed; //how fast this word is
@@ -18,6 +19,7 @@ public class FallingWord {
 		x=0;
 		y=0;	
 		maxY=300;
+		maxX=300;   // fro HungryWordMover
 		dropped=false;
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
 	}
@@ -27,10 +29,11 @@ public class FallingWord {
 		this.word=text;
 	}
 	
-	FallingWord(String text,int x, int maxY) { //most commonly used constructor - sets it all.
+	FallingWord(String text,int x, int maxY, int maxX) { //most commonly used constructor - sets it all.
 		this(text);
 		this.x=x; //only need to set x, word is at top of screen at start
 		this.maxY=maxY;
+		this.maxX=maxX;
 	}
 	
 	public static void increaseSpeed( ) {
@@ -54,6 +57,10 @@ public class FallingWord {
 	}
 	
 	public synchronized  void setX(int x) {
+		if (x>maxX) {
+			x=maxX;
+			dropped=true; //user did not manage to catch this word
+		}
 		this.x=x;
 	}
 	
@@ -77,12 +84,25 @@ public class FallingWord {
 		return fallingSpeed;
 	}
 
-	public synchronized void setPos(int x, int y) {
+	//change how sync here
+	public void setPos(int x, int y) {
 		setY(y);
 		setX(x);
 	}
 	public synchronized void resetPos() {
 		setY(0);
+	}
+
+	public synchronized void resetHungryPos() {
+		setX(0);
+	}
+
+	public synchronized void resetHungryWord() {
+		resetHungryPos();
+		word=dict.getNewWord();
+		dropped=false;
+		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
+		//System.out.println(getWord() + " falling speed = " + getSpeed());
 	}
 
 	public synchronized void resetWord() {
@@ -105,6 +125,10 @@ public class FallingWord {
 
 	public synchronized  void drop(int inc) {
 		setY(y+inc);
+	}
+
+	public synchronized  void dropHungryWord(int inc) {
+		setY(x+inc);
 	}
 	
 	public synchronized  boolean dropped() {
