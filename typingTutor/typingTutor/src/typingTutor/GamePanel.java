@@ -15,12 +15,14 @@ public class GamePanel extends JPanel implements Runnable {
 		private AtomicBoolean won ; //REMOVE
 
 		private FallingWord[] words;
+		private ArrayList<FallingWord> Hwords;
 		private int noWords;
 		private final static int borderWidth=25; //appearance - border
 
 		GamePanel(FallingWord[] words, ArrayList Hwords, int maxY,	
 				 AtomicBoolean d, AtomicBoolean s, AtomicBoolean w) {
 			this.words=words; //shared word list
+			this.Hwords=Hwords; //shared word list
 			noWords = words.length; //only need to do this once
 			done=d; //REMOVE
 			started=s; //REMOVE
@@ -43,8 +45,11 @@ public class GamePanel extends JPanel implements Runnable {
 		    	
 		    }
 		    else if (!done.get()) {
-		    	for (int i=0;i<noWords;i++){	    	
-		    		g.drawString(words[i].getWord(),words[i].getX()+borderWidth,words[i].getY());	
+		    	for (int i=0;i<noWords;i++){
+					g.setColor(Color.black);	    	
+		    		g.drawString(words[i].getWord(),words[i].getX()+borderWidth,words[i].getY());
+					g.setColor(Color.GREEN);
+					g.drawString(Hwords.get(i).getWord(),words[i].getX()+borderWidth,words[i].getY());	
 		    	}
 		    	g.setColor(Color.lightGray); //change colour of pen
 		    	g.fillRect(borderWidth,0,width,borderWidth);

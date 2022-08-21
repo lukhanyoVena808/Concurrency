@@ -201,9 +201,9 @@ public class TypingTutorApp {
 		score.reset();
 
 	  	//initialize shared array of current words with the words for this game
-		// for (int i=0;i<noWords;i++) {
-		// 	words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,false);
-		// }
+		for (int i=0;i<noWords;i++) {
+			words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,false);
+		}
 
 		 	// initialize shared array of current words with the words for this game
 		for (int i=0;i<noWords;i++) {
@@ -211,9 +211,9 @@ public class TypingTutorApp {
 			}
 
 		//create threads to move them
-	    // for (int i=0;i<noWords;i++) {
-	    // 		wrdShft[i] = new WordMover(words[i],dict,score,startLatch,done,pause);
-	    // }
+	    for (int i=0;i<noWords;i++) {
+	    		wrdShft[i] = new WordMover(words[i],dict,score,startLatch,done,pause);
+	    }
 
 		// ArrayList<FallingWord> HungryWords = new ArrayList<>(Arrays.asList(words));
 		ArrayList<HungryWordMover> HWords = new ArrayList<>();
@@ -223,14 +223,14 @@ public class TypingTutorApp {
 		//create threads to move HungryWords
 		for (int i=0;i<noWords;i++) {
 			HWords.add(new HungryWordMover(HungryWords.get(wdPos),dict,score,startLatch,done,pause));
-			System.out.println(noWords);
-			System.out.println(HungryWords.get(wdPos).getSpeed());
-			System.out.println("");
+			// System.out.println(noWords);
+			// System.out.println(HungryWords.get(wdPos).getSpeed());
+			// System.out.println("");
 	}
 
         //word movers waiting on starting line 
      	for (int i=0;i<noWords;i++) {
-     		// wrdShft[i] .start();
+     		wrdShft[i] .start();
 			HWords.get(i).start();
 		}
 	}
