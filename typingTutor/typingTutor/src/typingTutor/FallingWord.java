@@ -18,7 +18,7 @@ public class FallingWord {
 		word="computer"; // a default - not used
 		x=0;
 		y=0;	
-		maxY=300;
+		maxY=400;
 		maxX=300;   // fro HungryWordMover
 		dropped=false;
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
@@ -29,12 +29,16 @@ public class FallingWord {
 		this.word=text;
 	}
 	
-	FallingWord(String text,int x, int maxY, int maxX) { //most commonly used constructor - sets it all.
+	
+	FallingWord(String text,int x,int Y, int maxY, int maxX,boolean hungry) { //most commonly used constructor - sets it all.
 		this(text);
-		this.x=x; //only need to set x, word is at top of screen at start
+		if(hungry){this.y = Y/2;}
+		else{this.x=x;} //only need to set x, word is at top of screen at start
+		// this.x=x;
 		this.maxY=maxY;
 		this.maxX=maxX;
 	}
+
 	
 	public static void increaseSpeed( ) {
 		minWait+=50;
@@ -127,8 +131,9 @@ public class FallingWord {
 		setY(y+inc);
 	}
 
+	//Shift Hungry Word
 	public synchronized  void dropHungryWord(int inc) {
-		setY(x+inc);
+		setX(x+inc);
 	}
 	
 	public synchronized  boolean dropped() {

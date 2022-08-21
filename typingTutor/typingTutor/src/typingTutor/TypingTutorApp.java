@@ -26,11 +26,12 @@ public class TypingTutorApp {
    	static int frameX=1000;
 	static int frameY=600;
 	static int yLimit=480;
-	static int xLimit=880;
+	static int xLimit=900;
 
 	static WordDictionary dict = new WordDictionary(); //use default dictionary, to read from file eventually
 
 	static FallingWord[] words;
+	static ArrayList<FallingWord> HungryWords = new ArrayList<>();
 
 	static WordMover[] wrdShft;
 	static CountDownLatch startLatch; //so threads can start at once
@@ -56,7 +57,7 @@ public class TypingTutorApp {
         g.setLayout(new BoxLayout(g, BoxLayout.PAGE_AXIS)); 
       	g.setSize(frameX,frameY);
  
-		gameWindow = new GamePanel(words,yLimit,done,started,won);
+		gameWindow = new GamePanel(words,HungryWords,yLimit,done,started,won);
 		gameWindow.setSize(frameX,yLimit+100);
 	    g.add(gameWindow);
 	    
@@ -198,30 +199,40 @@ public class TypingTutorApp {
 	
 	public static void createWordMoverThreads() {
 		score.reset();
-		// ArrayList<FallingWord> HungryWords = new ArrayList<>();
+
 	  	//initialize shared array of current words with the words for this game
+		// for (int i=0;i<noWords;i++) {
+		// 	words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,false);
+		// }
+
+		 	// initialize shared array of current words with the words for this game
 		for (int i=0;i<noWords;i++) {
-			words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),yLimit,xLimit);
-			// HungryWords.add(new FallingWord(dict.getNewWord(),200,yLimit,xLimit));
-		}
+				HungryWords.add(new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,true));
+			}
 
 		//create threads to move them
-	    for (int i=0;i<noWords;i++) {
-	    		wrdShft[i] = new WordMover(words[i],dict,score,startLatch,done,pause);
-	    }
+	    // for (int i=0;i<noWords;i++) {
+	    // 		wrdShft[i] = new WordMover(words[i],dict,score,startLatch,done,pause);
+	    // }
 
-		ArrayList<FallingWord> HungryWords = new ArrayList<>(Arrays.asList(words));
+		// ArrayList<FallingWord> HungryWords = new ArrayList<>(Arrays.asList(words));
+		ArrayList<HungryWordMover> HWords = new ArrayList<>();
 		int wdPos= (int)(Math.random() * (noWords-1));
-		//create threads to move HungryWord
-	    HungryWordMover hungry = new HungryWordMover(HungryWords.get(wdPos),dict,score,startLatch,done,pause);
-	    
-		//HungryWord mover waiting on starting line
-		hungry.start();
 
-        //word movers waiting on starting line
+		
+		//create threads to move HungryWords
+		for (int i=0;i<noWords;i++) {
+			HWords.add(new HungryWordMover(HungryWords.get(wdPos),dict,score,startLatch,done,pause));
+			System.out.println(noWords);
+			System.out.println(HungryWords.get(wdPos).getSpeed());
+			System.out.println("");
+	}
+
+        //word movers waiting on starting line 
      	for (int i=0;i<noWords;i++) {
-     		wrdShft[i] .start();
-     	}
+     		// wrdShft[i] .start();
+			HWords.get(i).start();
+		}
 	}
 	
 public static String[] getDictFromFile(String filename) {

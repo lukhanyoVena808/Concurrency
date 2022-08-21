@@ -3,6 +3,7 @@ package typingTutor;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -17,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
 		private int noWords;
 		private final static int borderWidth=25; //appearance - border
 
-		GamePanel(FallingWord[] words, int maxY,	
+		GamePanel(FallingWord[] words, ArrayList Hwords, int maxY,	
 				 AtomicBoolean d, AtomicBoolean s, AtomicBoolean w) {
 			this.words=words; //shared word list
 			noWords = words.length; //only need to do this once
@@ -62,6 +63,9 @@ public class GamePanel extends JPanel implements Runnable {
 			int width = getWidth()-borderWidth*4;
 			int x= (int)(Math.random() * width);
 			return x;
+		}
+		public int getValidHeight() {
+			return getHeight()-borderWidth*4;
 		}
 		
 		public void run() {
