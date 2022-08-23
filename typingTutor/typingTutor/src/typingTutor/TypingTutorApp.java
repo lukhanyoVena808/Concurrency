@@ -279,6 +279,7 @@ public static void main(String[] args) {
 		wrdShft = new WordMover[noWords]; //array for the threads that animate the words
 		
 		CatchWord.setWords(words);  //class setter - static method
+		CatchWord.setHungryWords(HungryWords);  //class setter - static method
 		CatchWord.setScore(score);  //class setter - static method
 		CatchWord.setFlags(done,pause); //class setter - static method
 

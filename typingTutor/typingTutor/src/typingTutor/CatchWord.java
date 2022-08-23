@@ -1,5 +1,6 @@
 package typingTutor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -14,6 +15,7 @@ public class CatchWord extends Thread {
 	static AtomicBoolean pause; //REMOVE
 	
 	private static  FallingWord[] words; //list of words
+	private static ArrayList<FallingWord> HungryWords = new ArrayList<>(); //hungry words
 	private static int noWords; //how many
 	private static Score score; //user score
 	
@@ -24,6 +26,9 @@ public class CatchWord extends Thread {
 	public static void setWords(FallingWord[] wordList) {
 		words=wordList;	
 		noWords = words.length;
+	}
+	public static void setHungryWords( ArrayList<FallingWord> wordList) {
+		HungryWords=wordList;	
 	}
 	
 	public static synchronized void setScore(Score sharedScore) {
@@ -40,7 +45,16 @@ public class CatchWord extends Thread {
 		Arrays.sort(words, CatchWord::compare); //sort array
 		while (i<noWords) {		
 			// while(pause.get()) {}// when game is paused,
+				// Check normal words
 				if (words[i].matchWord(target) && !pause.get()) {
+					System.out.println( " score! '" + target); //for checking
+					score.caughtWord(target.length());	
+					//FallingWord.increaseSpeed();
+					break;
+				}
+
+				//check Hungry words
+				if ((HungryWords.get(i)).matchWord(target) && !pause.get()) {
 					System.out.println( " score! '" + target); //for checking
 					score.caughtWord(target.length());	
 					//FallingWord.increaseSpeed();

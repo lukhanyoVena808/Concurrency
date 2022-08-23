@@ -59,8 +59,6 @@ public class WordMover extends Thread {
 					
 				myWord.resetWord();
 				}
-			
-		yield();
 	}
 	
 }
