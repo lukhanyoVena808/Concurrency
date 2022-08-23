@@ -1,0 +1,6 @@
+make.exe --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/cygdrive/c/Users/Student/Documents/Courses/2022/CSC2002S/Assignments/Concurrency'
+make: Leaving directory '/cygdrive/c/Users/Student/Documents/Courses/2022/CSC2002S/Assignments/Concurrency'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+
