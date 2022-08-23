@@ -2,6 +2,8 @@ package typingTutor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /*
@@ -16,8 +18,10 @@ public class CatchWord extends Thread {
 	
 	private static  FallingWord[] words; //list of words
 	private static ArrayList<FallingWord> HungryWords = new ArrayList<>(); //hungry words
+	private static ArrayList<String> arr = new ArrayList<>(); //hungry words
 	private static int noWords; //how many
 	private static Score score; //user score
+
 	
 	CatchWord(String typedWord) {
 		target=typedWord;
@@ -27,6 +31,11 @@ public class CatchWord extends Thread {
 		words=wordList;	
 		noWords = words.length;
 	}
+
+	public static void setArray(ArrayList<String> array) {
+		arr = array;
+	}
+
 	public static void setHungryWords( ArrayList<FallingWord> wordList) {
 		HungryWords=wordList;	
 	}
@@ -42,17 +51,17 @@ public class CatchWord extends Thread {
 	
 	public void run() {
 		int i=0;
-		Arrays.sort(words, CatchWord::compare); //sort array
 		while (i<noWords) {		
 			// while(pause.get()) {}// when game is paused,
-				// Check normal words
-				if (words[i].matchWord(target) && !pause.get()) {
+
+			if(arr.contains(target)){
+				if (words[arr.indexOf(target)].matchWord(target) && !pause.get()) {
 					System.out.println( " score! '" + target); //for checking
 					score.caughtWord(target.length());	
 					//FallingWord.increaseSpeed();
 					break;
 				}
-
+			}
 				//check Hungry words
 				if ((HungryWords.get(i)).matchWord(target) && !pause.get()) {
 					System.out.println( " score! '" + target); //for checking
@@ -60,7 +69,6 @@ public class CatchWord extends Thread {
 					//FallingWord.increaseSpeed();
 					break;
 				}
-			
 		   i++;
 		}		
 	}

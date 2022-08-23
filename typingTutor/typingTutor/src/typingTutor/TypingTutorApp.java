@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -31,8 +32,9 @@ public class TypingTutorApp {
 	static WordDictionary dict = new WordDictionary(); //use default dictionary, to read from file eventually
 
 	static FallingWord[] words;
+	static ArrayList<HungryWordMover> HWords = new ArrayList<>();
 	static ArrayList<FallingWord> HungryWords = new ArrayList<>();
-
+	static ArrayList<String> arr = new ArrayList<>(); //sorting array
 	static WordMover[] wrdShft;
 	static CountDownLatch startLatch; //so threads can start at once
 	
@@ -106,7 +108,7 @@ public class TypingTutorApp {
 	    // add the listener to the jbutton to handle the "pressed" event
 		startB.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-				synchronized (this){
+				
 		    	won.set(false);
 		    	done.set(false);
 		    	started.set(true);
@@ -126,7 +128,7 @@ public class TypingTutorApp {
 		    	textEntry.requestFocus();
 				}
 		      }
-		});//finish addActionListener
+		);//finish addActionListener
 			
 	   //the Pause Button
 		JButton pauseB = new JButton("Pause");
@@ -151,6 +153,10 @@ public class TypingTutorApp {
 					     		try {
 					     			if (wrdShft[i].isAlive())	{
 									wrdShft[i].join();}
+
+									if (HWords.get(i).isAlive())	{
+										HWords.get(i).join();}
+
 								} catch (InterruptedException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
@@ -199,9 +205,15 @@ public class TypingTutorApp {
 	
 	public static void createWordMoverThreads() {
 		score.reset();
-	  	//initialize shared array of current words with the words for this game
+	  	//wiil be used to sort words in order
+		  for (int i=0;i<noWords;i++) {
+			arr.add(dict.getNewWord());
+		}
+
+		Collections.sort(arr);
+		CatchWord.setArray(arr);
 		for (int i=0;i<noWords;i++) {
-			words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,false);
+			words[i]=new FallingWord(arr.get(i),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,false);
 		}
 
 		 	// initialize shared array of current words with the words for this game
@@ -214,20 +226,19 @@ public class TypingTutorApp {
 	    		wrdShft[i] = new WordMover(words[i],dict,score,startLatch,done,pause);
 	    }
 
-		ArrayList<HungryWordMover> HWords = new ArrayList<>();
-
+		HWords = new ArrayList<>();
 		//create threads to move HungryWords
-		// int wdPos= (int)(Math.random() * (noWords-1));
 		for (int i=0;i<noWords;i++) {
-		HWords.add(new HungryWordMover(HungryWords.get(i),dict,score,startLatch,done,pause));
-		
+			HWords.add(new HungryWordMover(HungryWords.get(i),dict,score,startLatch,done,pause));
 		}
 		
         //word movers waiting on starting line 
      	for (int i=0;i<noWords;i++) {
+			(HWords.get(i)).start();
      		wrdShft[i] .start();
-			HWords.get(i).start();
+			
 		}
+		// HWordsFinal = HWords;
 	}
 	
 public static String[] getDictFromFile(String filename) {
@@ -277,7 +288,6 @@ public static void main(String[] args) {
 		
 		words = new FallingWord[noWords];  //array for the  current chosen words from dict
 		wrdShft = new WordMover[noWords]; //array for the threads that animate the words
-		
 		CatchWord.setWords(words);  //class setter - static method
 		CatchWord.setHungryWords(HungryWords);  //class setter - static method
 		CatchWord.setScore(score);  //class setter - static method
