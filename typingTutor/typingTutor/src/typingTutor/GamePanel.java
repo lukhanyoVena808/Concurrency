@@ -46,8 +46,11 @@ public class GamePanel extends JPanel implements Runnable {
 		    }
 		    else if (!done.get()) {
 		    	for (int i=0;i<noWords;i++){
+					// The normal words
 					g.setColor(Color.black);	    	
 		    		g.drawString(words[i].getWord(),words[i].getX()+borderWidth,words[i].getY());
+
+					//The Hungry Word
 					g.setColor(Color.GREEN);
 					g.drawString((Hwords.get(i)).getWord(),(Hwords.get(i)).getX()+borderWidth,(Hwords.get(i)).getY());	
 		    	}
@@ -70,7 +73,7 @@ public class GamePanel extends JPanel implements Runnable {
 			return x;
 		}
 		public int getValidHeight() {
-			return getHeight()-borderWidth*4;
+			return getHeight()-borderWidth*2;
 		}
 		
 		public void run() {

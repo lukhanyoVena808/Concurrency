@@ -32,7 +32,7 @@ public class FallingWord {
 	
 	FallingWord(String text,int x,int Y, int maxY, int maxX,boolean hungry) { //most commonly used constructor - sets it all.
 		this(text);
-		if(hungry){this.y = Y/2;}
+		if(hungry){this.y = Y/2; this.x=0;}
 		else{this.x=x;} //only need to set x, word is at top of screen at start
 		// this.x=x;
 		this.maxY=maxY;
@@ -103,7 +103,7 @@ public class FallingWord {
 
 	public synchronized void resetHungryWord() {
 		resetHungryPos();
-		word=dict.getNewWord();
+		word=dict.getNewHungryWord();
 		dropped=false;
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
 		//System.out.println(getWord() + " falling speed = " + getSpeed());

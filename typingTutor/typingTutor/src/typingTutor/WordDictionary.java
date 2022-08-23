@@ -6,6 +6,9 @@ public class WordDictionary {
 		"cherry","lemon","apricot","peach","guava","grape","kiwi","quince","plum","prune",
 		"cranberry","blueberry","rhubarb","fruit","grapefruit","kumquat","tomato","berry",
 		"boysenberry","loquat","avocado"}; //default dictionary
+
+	static String [] theHungryDict= {"Bacon","Beef","Buffalo","Dusk","Goose","Liver","Mutton","Partridge","Pheasant","Pork","Quail","Rabbit","Veal","Chicken","Turkey","Cornish","Caviar","Clam","Conch","Crab","Eel","Flounder","Sole","Haddock","Halibut","Herring","Lobster","Lox"}; // same size as default dictionary
+	// "Mussels","Octopus","Oysters","Scallop","Shrimp"
 	
 	WordDictionary(String [] tmp) {
 		size = tmp.length;
@@ -24,5 +27,9 @@ public class WordDictionary {
 		int wdPos= (int)(Math.random() * size);
 		return theDict[wdPos];
 	}
-	
+
+	public synchronized String getNewHungryWord() {
+		int wdPos= (int)(Math.random() * size);
+		return theHungryDict[wdPos];
+	}
 }
