@@ -30,6 +30,6 @@ public class WordDictionary {
 
 	public synchronized String getNewHungryWord() {
 		int wdPos= (int)(Math.random() * size);
-		return theHungryDict[wdPos];
+		return theHungryDict[wdPos].toLowerCase();
 	}
 }
