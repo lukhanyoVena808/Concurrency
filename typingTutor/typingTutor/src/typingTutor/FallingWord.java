@@ -34,7 +34,7 @@ public class FallingWord {
 		this(text);
 		if(hungry){this.y = Y/2; this.x=0;}
 		else{this.x=x;} //only need to set x, word is at top of screen at start
-		// this.x=x;
+
 		this.maxY=maxY;
 		this.maxX=maxX;
 	}
@@ -103,10 +103,12 @@ public class FallingWord {
 
 	public synchronized void resetHungryWord() {
 		resetHungryPos();
+		System.out.println("old: "+word);
 		word=dict.getNewHungryWord();
+		System.out.println("new: "+word);
 		dropped=false;
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
-		//System.out.println(getWord() + " falling speed = " + getSpeed());
+		
 	}
 
 	public synchronized void resetWord() {
@@ -114,13 +116,14 @@ public class FallingWord {
 		word=dict.getNewWord();
 		dropped=false;
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
-		//System.out.println(getWord() + " falling speed = " + getSpeed());
+	
 	}
 	
-	public synchronized boolean matchWord(String typedText) {
-		//System.out.println("Matching against: "+text);
+	public synchronized boolean matchWord(String typedText, boolean isHungry) {
+		
 		if (typedText.equals(this.word)) {
-			resetWord();
+			if(isHungry){ resetHungryWord();}
+			else{ resetWord();}
 			return true;
 		}
 		else

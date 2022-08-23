@@ -51,7 +51,6 @@ public class HungryWordMover extends Thread {
 						while(pause.get()&&!done.get()){}
 				}
 					
-					
 					if (!done.get() && myWord.dropped()) {
 						score.missedWord();
 						myWord.resetHungryWord();

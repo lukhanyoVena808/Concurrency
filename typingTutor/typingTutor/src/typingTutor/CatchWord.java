@@ -1,9 +1,6 @@
 package typingTutor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /*
@@ -55,18 +52,17 @@ public class CatchWord extends Thread {
 			// while(pause.get()) {}// when game is paused,
 
 			if(arr.contains(target)){
-				if (words[arr.indexOf(target)].matchWord(target) && !pause.get()) {
+				if (words[arr.indexOf(target)].matchWord(target, false) && !pause.get()) {
 					System.out.println( " score! '" + target); //for checking
 					score.caughtWord(target.length());	
-					//FallingWord.increaseSpeed();
+					
 					break;
 				}
 			}
 				//check Hungry words
-				if ((HungryWords.get(i)).matchWord(target) && !pause.get()) {
+				if ((HungryWords.get(i)).matchWord(target, true) && !pause.get()) {
 					System.out.println( " score! '" + target); //for checking
 					score.caughtWord(target.length());	
-					//FallingWord.increaseSpeed();
 					break;
 				}
 		   i++;
