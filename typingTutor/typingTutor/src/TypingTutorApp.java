@@ -233,11 +233,6 @@ public class TypingTutorApp {
 		}
 
 	}
-
-	public int compare(FallingWord a, FallingWord b){
-		return a.getY() - (b.getY());
-	}
-
 	
 public static String[] getDictFromFile(String filename) {
 	//read in the list of words.

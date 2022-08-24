@@ -51,18 +51,18 @@ public class WordMover extends Thread {
 							e.printStackTrace();
 						}		
 						while(pause.get()&&!done.get()){}
+						
+						if (myWord.collide(HungryWord)) {
+							score.missedWord();
+							myWord.resetWord();
+							HungryWord.resetHungryWord();
+							}
 				}
 					
 				
 					if (!done.get() && myWord.dropped()) {
-						score.missedWord();
+						// score.missedWord();
 						myWord.resetWord();
-						}
-
-					if (!done.get() && myWord.collide(HungryWord)) {
-						score.missedWord();
-						myWord.resetWord();
-						HungryWord.resetHungryWord();
 						}
 					
 				myWord.resetWord();

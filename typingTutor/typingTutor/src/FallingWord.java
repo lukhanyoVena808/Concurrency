@@ -107,15 +107,26 @@ public class FallingWord {
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
 		
 	}
+
+	// get length of longest word
+	public synchronized int getDistance(FallingWord w){
+		if ((w.getWord()).length() >= (this.word).length()){
+			return (w.getWord()).length();
+		}
+		return (this.word).length();
+	}
+
 	//checks if 2 words are colliding
 	public synchronized boolean collide(FallingWord w){
+		System.out.println("Word going down: "+this.getWord());
+		System.out.println("HungryWord: "+w.getWord());
+		int dist = getDistance(w);
+		System.out.println("dist: "+dist);
 		if(this.getX()== w.getX() && this.getY()==w.getY()){
-			System.out.println("Yes!!!!!");
 			return true;
 		}
 
-		if ( Math.abs(this.getX()-w.getX())<5 &&  Math.abs(this.getY()-w.getY())<5){
-			System.out.println("Yes!!!!");
+		if ( Math.abs(this.getX()-w.getX())<dist &&  Math.abs(this.getY()-w.getY())<dist){
 			return true;
 		}
 		return false;

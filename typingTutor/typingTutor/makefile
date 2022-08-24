@@ -25,4 +25,4 @@ clean:
 
 
 App: $(CLASS_FILES)
-	java -cp $(BINDIR) TypingTutorApp &$(nw) $(tw) $(dict)
+	java -cp $(BINDIR) TypingTutorApp $(nw) $(tw) $(dict)
