@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.*;
@@ -35,7 +36,12 @@ public class TypingTutorApp {
 	static ArrayList<FallingWord> HungryWords = new ArrayList<>();
 	static WordMover[] wrdShft;
 	static CountDownLatch startLatch; //so threads can start at once
-	
+
+	private static ArrayList<Integer> yLengths = new ArrayList<>();  //stores the y-lengths 
+	private static HashMap<Integer,FallingWord> linkLengths = new HashMap<>(); //stores the y-length and the Falling word
+	private static HashMap<Integer,FallingWord> SortedlinkLengths = new HashMap<>(); //stores the y-length and the Falling word
+
+
 	static AtomicBoolean started;  
 	static AtomicBoolean pause;  
 	static AtomicBoolean done;  
@@ -207,6 +213,7 @@ public class TypingTutorApp {
 			words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,false);
 		}
 
+
 		// initialize shared array of current words with the words for this game
 		HungryWords.add(new FallingWord(dict.getNewHungryWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,true));
 
@@ -226,6 +233,11 @@ public class TypingTutorApp {
 		}
 
 	}
+
+	public int compare(FallingWord a, FallingWord b){
+		return a.getY() - (b.getY());
+	}
+
 	
 public static String[] getDictFromFile(String filename) {
 	//read in the list of words.
