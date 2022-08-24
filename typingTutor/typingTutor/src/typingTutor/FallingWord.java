@@ -1,6 +1,5 @@
 package typingTutor;
 
-import java.util.Timer;
 
 public class FallingWord {
 	private String word; // the word
@@ -122,6 +121,7 @@ public class FallingWord {
 	public synchronized boolean matchWord(String typedText, boolean isHungry) {
 		
 		if (typedText.equals(this.word)) {
+			
 			if(isHungry){ resetHungryWord();}
 			else{ resetWord();}
 			return true;

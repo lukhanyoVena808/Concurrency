@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -32,7 +33,6 @@ public class TypingTutorApp {
 	static FallingWord[] words;
 	static ArrayList<HungryWordMover> HWords = new ArrayList<>();
 	static ArrayList<FallingWord> HungryWords = new ArrayList<>();
-	static ArrayList<String> arr = new ArrayList<>(); //sorting array
 	static WordMover[] wrdShft;
 	static CountDownLatch startLatch; //so threads can start at once
 	
