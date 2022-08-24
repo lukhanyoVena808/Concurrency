@@ -1,6 +1,8 @@
 package typingTutor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /*
@@ -41,10 +43,20 @@ public class CatchWord extends Thread {
 		pause=p;
 	}
 
+	// sort Array so lowest word is selected
+	public static synchronized void mySort(){
+		Arrays.sort(words, new Comparator<FallingWord>() {
+			@Override
+			public int compare(FallingWord o1, FallingWord o2) {
+				return o2.getY() - o1.getY();
+			}
+		});
+	}
 	
 	@Override
 	public void run() {
 		int i=0;
+		mySort();
 		while (i<noWords) {
 				if (words[i].matchWord(target, false) && !pause.get()) {
 					System.out.println( " score! " + target); //for checking
