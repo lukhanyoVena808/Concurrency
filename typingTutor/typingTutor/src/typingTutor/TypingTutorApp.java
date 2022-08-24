@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Scanner;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -204,22 +202,13 @@ public class TypingTutorApp {
 	
 	
 	public static void createWordMoverThreads() {
-		score.reset();
-	  	//wiil be used to sort words in order
-		  for (int i=0;i<noWords;i++) {
-			arr.add(dict.getNewWord());
+		score.reset();		
+		for (int i=0;i<noWords;i++) {
+			words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,false);
 		}
 
-		Collections.sort(arr);
-		CatchWord.setArray(arr);
-		for (int i=0;i<noWords;i++) {
-			words[i]=new FallingWord(arr.get(i),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,false);
-		}
-
-		 	// initialize shared array of current words with the words for this game
-		for (int i=0;i<noWords;i++) {
-				HungryWords.add(new FallingWord(dict.getNewHungryWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,true));
-			}
+		// initialize shared array of current words with the words for this game
+		HungryWords.add(new FallingWord(dict.getNewHungryWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,true));
 
 		//create threads to move them
 	    for (int i=0;i<noWords;i++) {
@@ -228,17 +217,14 @@ public class TypingTutorApp {
 
 		HWords = new ArrayList<>();
 		//create threads to move HungryWords
-		for (int i=0;i<noWords;i++) {
-			HWords.add(new HungryWordMover(HungryWords.get(i),dict,score,startLatch,done,pause));
-		}
-		
+		HWords.add(new HungryWordMover(HungryWords.get(0),dict,score,startLatch,done,pause));
+		(HWords.get(0)).start();
+
         //word movers waiting on starting line 
      	for (int i=0;i<noWords;i++) {
-			(HWords.get(i)).start();
      		wrdShft[i] .start();
-			
 		}
-		// HWordsFinal = HWords;
+
 	}
 	
 public static String[] getDictFromFile(String filename) {

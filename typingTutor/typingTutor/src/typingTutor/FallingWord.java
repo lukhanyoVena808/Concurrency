@@ -1,5 +1,7 @@
 package typingTutor;
 
+import java.util.Timer;
+
 public class FallingWord {
 	private String word; // the word
 	private int x; //position - width
@@ -103,9 +105,7 @@ public class FallingWord {
 
 	public synchronized void resetHungryWord() {
 		resetHungryPos();
-		System.out.println("old: "+word);
 		word=dict.getNewHungryWord();
-		System.out.println("new: "+word);
 		dropped=false;
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
 		

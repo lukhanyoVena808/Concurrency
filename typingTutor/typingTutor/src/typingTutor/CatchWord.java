@@ -15,7 +15,6 @@ public class CatchWord extends Thread {
 	
 	private static  FallingWord[] words; //list of words
 	private static ArrayList<FallingWord> HungryWords = new ArrayList<>(); //hungry words
-	private static ArrayList<String> arr = new ArrayList<>(); //hungry words
 	private static int noWords; //how many
 	private static Score score; //user score
 
@@ -29,9 +28,6 @@ public class CatchWord extends Thread {
 		noWords = words.length;
 	}
 
-	public static void setArray(ArrayList<String> array) {
-		arr = array;
-	}
 
 	public static void setHungryWords( ArrayList<FallingWord> wordList) {
 		HungryWords=wordList;	
@@ -46,31 +42,24 @@ public class CatchWord extends Thread {
 		pause=p;
 	}
 	
+	@Override
 	public void run() {
 		int i=0;
 		while (i<noWords) {		
-			// while(pause.get()) {}// when game is paused,
-
-			if(arr.contains(target)){
-				if (words[arr.indexOf(target)].matchWord(target, false) && !pause.get()) {
-					System.out.println( " score! '" + target); //for checking
-					score.caughtWord(target.length());	
-					
-					break;
-				}
+			if (words[i].matchWord(target, false) && !pause.get()) {
+				System.out.println( " score! " + target); //for checking
+				score.caughtWord(target.length());	
+				break;
 			}
-				//check Hungry words
-				if ((HungryWords.get(i)).matchWord(target, true) && !pause.get()) {
-					System.out.println( " score! '" + target); //for checking
-					score.caughtWord(target.length());	
-					break;
-				}
+		
+			//check Hungry words
+			if ((HungryWords.get(i)).matchWord(target, true) && !pause.get()) {
+				System.out.println( " score! " + target); //for checking
+				score.caughtWord(target.length());	
+				break;
+			}
 		   i++;
 		}		
 	}
 	
-	//Compare Method
-	public static int compare(FallingWord a, FallingWord b) {
-	return a.getWord().compareTo(b.getWord());
-}
 }
