@@ -1,10 +1,11 @@
-package typingTutor;
+
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WordMover extends Thread {
 	private FallingWord myWord;
+	private FallingWord HungryWord;
 	private AtomicBoolean done;
 	private AtomicBoolean pause; 
 	private Score score;
@@ -14,13 +15,14 @@ public class WordMover extends Thread {
 		myWord = word;
 	}
 	
-	WordMover( FallingWord word,WordDictionary dict, Score score,
+	WordMover( FallingWord word,WordDictionary dict, FallingWord HungryWord,Score score,
 			CountDownLatch startLatch, AtomicBoolean d, AtomicBoolean p) {
 		this(word);
 		this.startLatch = startLatch;
 		this.score=score;
 		this.done=d;
 		this.pause=p;
+		this.HungryWord = HungryWord;
 	}
 	
 	
@@ -55,6 +57,12 @@ public class WordMover extends Thread {
 					if (!done.get() && myWord.dropped()) {
 						score.missedWord();
 						myWord.resetWord();
+						}
+
+					if (!done.get() && myWord.collide(HungryWord)) {
+						score.missedWord();
+						myWord.resetWord();
+						HungryWord.resetHungryWord();
 						}
 					
 				myWord.resetWord();

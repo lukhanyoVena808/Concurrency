@@ -1,4 +1,4 @@
-package typingTutor;
+
 
 import javax.swing.*;
 
@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.*;
@@ -216,15 +215,16 @@ public class TypingTutorApp {
 
 		// initialize shared array of current words with the words for this game
 		HungryWords.add(new FallingWord(dict.getNewHungryWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,true));
-
-		//create threads to move them
-	    for (int i=0;i<noWords;i++) {
-	    		wrdShft[i] = new WordMover(words[i],dict,score,startLatch,done,pause);
-	    }
-
 		HWords = new ArrayList<>();
 		//create threads to move HungryWords
 		HWords.add(new HungryWordMover(HungryWords.get(0),dict,score,startLatch,done,pause));
+
+		//create threads to move them
+	    for (int i=0;i<noWords;i++) {
+	    		wrdShft[i] = new WordMover(words[i],dict,HungryWords.get(0),score,startLatch,done,pause);
+	    }
+
+
 		(HWords.get(0)).start();
 
         //word movers waiting on starting line 

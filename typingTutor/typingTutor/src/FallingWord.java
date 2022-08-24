@@ -1,5 +1,3 @@
-package typingTutor;
-
 
 public class FallingWord {
 	private String word; // the word
@@ -102,12 +100,25 @@ public class FallingWord {
 		setX(0);
 	}
 
-	public synchronized void resetHungryWord() {
+	public synchronized void resetHungryWord(){
 		resetHungryPos();
 		word=dict.getNewHungryWord();
 		dropped=false;
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
 		
+	}
+	//checks if 2 words are colliding
+	public synchronized boolean collide(FallingWord w){
+		if(this.getX()== w.getX() && this.getY()==w.getY()){
+			System.out.println("Yes!!!!!");
+			return true;
+		}
+
+		if ( Math.abs(this.getX()-w.getX())<5 &&  Math.abs(this.getY()-w.getY())<5){
+			System.out.println("Yes!!!!");
+			return true;
+		}
+		return false;
 	}
 
 	public synchronized void resetWord() {
