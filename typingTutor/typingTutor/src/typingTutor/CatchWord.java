@@ -67,14 +67,16 @@ public class CatchWord extends Thread {
 		while (i<noWords) {
 
 			// if(matcher(words, target)){
-				// int pos = yLengths.size()-1;
-				// int fallingPos = yLengths.get(pos);
+			// 	int pos = yLengths.size()-1;
+			// 	int fallingPos = yLengths.get(pos);
+			// 	if (linkLengths.get(fallingPos).matchWord(target, false) && !pause.get()) {
 				if (words[i].matchWord(target, false) && !pause.get()) {
 					System.out.println( " score! " + target); //for checking
 					score.caughtWord(target.length());	
 					break;
 				}
 			// }
+
 			//check Hungry words
 			if ((HungryWords.get(0)).matchWord(target, true) && !pause.get()) {
 				System.out.println( " score! " + target); //for checking

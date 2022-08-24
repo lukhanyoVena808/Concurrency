@@ -152,8 +152,8 @@ public class TypingTutorApp {
 					     			if (wrdShft[i].isAlive())	{
 									wrdShft[i].join();}
 
-									if (HWords.get(i).isAlive())	{
-										HWords.get(i).join();}
+									if (HWords.get(0).isAlive())	{
+										HWords.get(0).join();}
 
 								} catch (InterruptedException e1) {
 									// TODO Auto-generated catch block
