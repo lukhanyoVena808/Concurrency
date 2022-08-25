@@ -36,6 +36,9 @@ public class GamePanel extends JPanel implements Runnable {
 		    g.clearRect(borderWidth,borderWidth,width,height);//the active space
 		    g.setColor(Color.pink); //change colour of pen
 		    g.fillRect(borderWidth,height,width,borderWidth); //draw danger zone
+	
+		    g.setColor(Color.pink); //change colour of pen
+		    g.fillRect(width,borderWidth,borderWidth,height-borderWidth); //draw danger zone
 
 		    g.setColor(Color.black);
 		    g.setFont(new Font("Arial", Font.PLAIN, 26));

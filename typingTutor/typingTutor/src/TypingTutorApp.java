@@ -215,7 +215,7 @@ public class TypingTutorApp {
 
 
 		// initialize shared array of current words with the words for this game
-		HungryWords.add(new FallingWord(dict.getNewHungryWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,true));
+		HungryWords.add(new FallingWord(dict.getNewHungryWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit-40,true));
 		HWords = new ArrayList<>();
 		//create threads to move HungryWords
 		HWords.add(new HungryWordMover(HungryWords.get(0),dict,score,startLatch,done,pause));
