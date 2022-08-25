@@ -160,6 +160,7 @@ public class TypingTutorApp {
 									if (HWords.get(0).isAlive())	{
 										HWords.get(0).join();}
 
+									textEntry.setText("");//clear text Area before restarting game
 								} catch (InterruptedException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();

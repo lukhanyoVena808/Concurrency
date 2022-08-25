@@ -71,7 +71,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		
 		public int getValidXpos() {
-			int width = getWidth()-borderWidth*4;
+			int width = getWidth()-(borderWidth*8);
 			int x= (int)(Math.random() * width);
 			return x;
 		}
