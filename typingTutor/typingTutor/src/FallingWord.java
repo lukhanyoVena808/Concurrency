@@ -118,10 +118,8 @@ public class FallingWord {
 
 	//checks if 2 words are colliding
 	public synchronized boolean collide(FallingWord w){
-		System.out.println("Word going down: "+this.getWord());
-		System.out.println("HungryWord: "+w.getWord());
 		int dist = getDistance(w);
-		System.out.println("dist: "+dist);
+		// System.out.println("dist: "+dist); //for checking if distance is calculated
 		if(this.getX()== w.getX() && this.getY()==w.getY()){
 			return true;
 		}
