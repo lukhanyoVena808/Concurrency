@@ -63,13 +63,14 @@ public class CatchWord extends Thread {
 					score.caughtWord(target.length());	
 					break;
 				}
-		
-			//check Hungry words
-			if ((HungryWords.get(0)).matchWord(target, true) && !pause.get()) {
-				System.out.println( " score! " + target); //for checking
-				score.caughtWord(target.length());	
-				break;
-			}
+
+				//check Hungry words
+				if ((HungryWords.get(0)).matchWord(target, true) && !pause.get()) {
+					System.out.println( " score! " + target); //for checking
+					score.caughtWord(target.length());	
+					break;
+				}	
+
 		   i++;
 		}		
 	}
