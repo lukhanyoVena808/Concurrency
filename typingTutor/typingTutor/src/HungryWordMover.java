@@ -41,7 +41,7 @@ public class HungryWordMover extends Thread {
 			while (!done.get()) {
 				//animate the word
 				while (!myWord.dropped() && !done.get()) {
-						myWord.dropHungryWord(12);
+						myWord.dropHungryWord(8);
 						try {
 							sleep(myWord.getSpeed());
 						} catch (InterruptedException e) {

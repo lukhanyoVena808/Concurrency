@@ -108,23 +108,31 @@ public class FallingWord {
 		
 	}
 
-	// get length of longest word
-	public synchronized int getDistance(FallingWord w){
+	/*
+	 * get the distance between two words
+	 * Assumption is that each letter in a word takes approximately 3 spaces
+	 */
+	public int getDistance(FallingWord w){
 		if ((w.getWord()).length() >= (this.word).length()){
-			return (w.getWord()).length();
+			return ((w.getWord()).length() *3);
 		}
-		return (this.word).length();
+		return ((this.word).length() *3);
 	}
 
 	//checks if 2 words are colliding
 	public synchronized boolean collide(FallingWord w){
 		int dist = getDistance(w);
+		int checkX = Math.abs(this.getX()-w.getX());
+		int checkY = Math.abs(this.getY()-w.getY());
+		// System.out.println(this.word); 
+		// System.out.println("(x,y): "+this.getX()+","+this.getY());
+		// System.out.println("H(x,y): "+w.getX()+","+w.getY());
 		// System.out.println("dist: "+dist); //for checking if distance is calculated
 		if(this.getX()== w.getX() && this.getY()==w.getY()){
 			return true;
 		}
 
-		if ( Math.abs(this.getX()-w.getX())<dist &&  Math.abs(this.getY()-w.getY())<dist){
+		if ( checkX<=dist &&  checkY<=dist){
 			return true;
 		}
 		return false;
