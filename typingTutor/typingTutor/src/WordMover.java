@@ -1,10 +1,11 @@
-
-
+import java.util.Comparator;
+import java.util.Arrays;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WordMover extends Thread {
 	private FallingWord myWord;
+	private static FallingWord[] words;
 	private FallingWord HungryWord;
 	private AtomicBoolean done;
 	private AtomicBoolean pause; 
@@ -15,20 +16,31 @@ public class WordMover extends Thread {
 		myWord = word;
 	}
 	
-	WordMover( FallingWord word,WordDictionary dict, FallingWord HungryWord,Score score,
-			CountDownLatch startLatch, AtomicBoolean d, AtomicBoolean p) {
+	WordMover( FallingWord[] words,FallingWord word,WordDictionary dict, 
+	FallingWord HungryWord, Score score,CountDownLatch startLatch, AtomicBoolean d, AtomicBoolean p) {
+
 		this(word);
 		this.startLatch = startLatch;
 		this.score=score;
 		this.done=d;
 		this.pause=p;
+		this.words = words;
 		this.HungryWord = HungryWord;
 	}
 	
-	
+	// sort Array so lowest word is selected
+	public static synchronized void mySort(){
+		Arrays.sort(words, new Comparator<FallingWord>() {
+			@Override
+			public int compare(FallingWord o1, FallingWord o2) {
+				return o2.getY() - o1.getY();
+			}
+		});
+	}
 	
 	public void run() {
 
+		mySort();
 		//System.out.println(myWord.getWord() + " falling speed = " + myWord.getSpeed());
 		try {
 			System.out.println(myWord.getWord() + " waiting to start " );

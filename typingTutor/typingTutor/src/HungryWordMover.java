@@ -57,6 +57,7 @@ public class HungryWordMover extends Thread {
 						}
 					
 				myWord.resetHungryWord();
+						
 				}
 				
 	}

@@ -222,7 +222,7 @@ public class TypingTutorApp {
 
 		//create threads to move them
 	    for (int i=0;i<noWords;i++) {
-	    		wrdShft[i] = new WordMover(words[i],dict,HungryWords.get(0),score,startLatch,done,pause);
+	    		wrdShft[i] = new WordMover(words,words[i],dict,HungryWords.get(0),score,startLatch,done,pause);
 	    }
 
 

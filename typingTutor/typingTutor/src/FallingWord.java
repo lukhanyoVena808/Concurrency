@@ -110,13 +110,13 @@ public class FallingWord {
 
 	/*
 	 * get the distance between two words
-	 * Assumption is that each letter in a word takes approximately 3 spaces
+	 * Assumption is that each letter in a word takes approximately 4 spaces
 	 */
-	public int getDistance(FallingWord w){
+	public synchronized int getDistance(FallingWord w){
 		if ((w.getWord()).length() >= (this.word).length()){
-			return ((w.getWord()).length() *3);
+			return ((w.getWord()).length() *4);
 		}
-		return ((this.word).length() *3);
+		return ((this.word).length() *4);
 	}
 
 	//checks if 2 words are colliding
@@ -128,10 +128,6 @@ public class FallingWord {
 		// System.out.println("(x,y): "+this.getX()+","+this.getY());
 		// System.out.println("H(x,y): "+w.getX()+","+w.getY());
 		// System.out.println("dist: "+dist); //for checking if distance is calculated
-		if(this.getX()== w.getX() && this.getY()==w.getY()){
-			return true;
-		}
-
 		if ( checkX<=dist &&  checkY<=dist){
 			return true;
 		}

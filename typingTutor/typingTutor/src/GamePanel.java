@@ -17,7 +17,6 @@ public class GamePanel extends JPanel implements Runnable {
 		private FallingWord[] words;
 		private ArrayList<FallingWord> Hwords;
 		private int noWords;
-		private boolean[] truth = {true, false, false, true, false, true, true, false, false};
 		private final static int borderWidth=25; //appearance - border
 
 		GamePanel(FallingWord[] words, ArrayList Hwords, int maxY,	
@@ -49,7 +48,6 @@ public class GamePanel extends JPanel implements Runnable {
 		    	
 		    }
 		    else if (!done.get()) {
-				int pos=(int)(Math.random() * (truth.length-1));
 		    	for (int i=0;i<noWords;i++){
 					// The normal words
 					g.setColor(Color.black);	    	
@@ -58,8 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
 				//Hungry
 				g.setColor(Color.GREEN);
 				g.drawString((Hwords.get(0)).getWord(),(Hwords.get(0)).getX()+borderWidth,(Hwords.get(0)).getY());
-				pos=(int)(Math.random() * (truth.length-1));
-							
+
 		    	g.setColor(Color.lightGray); //change colour of pen
 		    	g.fillRect(borderWidth,0,width,borderWidth);
 		   }
