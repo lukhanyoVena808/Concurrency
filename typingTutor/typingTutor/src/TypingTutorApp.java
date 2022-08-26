@@ -36,17 +36,10 @@ public class TypingTutorApp {
 	static WordMover[] wrdShft;
 	static CountDownLatch startLatch; //so threads can start at once
 
-	private static ArrayList<Integer> yLengths = new ArrayList<>();  //stores the y-lengths 
-	private static HashMap<Integer,FallingWord> linkLengths = new HashMap<>(); //stores the y-length and the Falling word
-	private static HashMap<Integer,FallingWord> SortedlinkLengths = new HashMap<>(); //stores the y-length and the Falling word
-
-
 	static AtomicBoolean started;  
 	static AtomicBoolean pause;  
 	static AtomicBoolean done;  
 	static AtomicBoolean won;
-
-	static AtomicBoolean sleepy; 
 	
 	static Score score = new Score();
 	static GamePanel gameWindow;
@@ -64,7 +57,7 @@ public class TypingTutorApp {
         g.setLayout(new BoxLayout(g, BoxLayout.PAGE_AXIS)); 
       	g.setSize(frameX,frameY);
  
-		gameWindow = new GamePanel(words,HungryWords,yLimit,done,started,won, sleepy);
+		gameWindow = new GamePanel(words,HungryWords,yLimit,done,started,won);
 		gameWindow.setSize(frameX,yLimit+100);
 	    g.add(gameWindow);
 	    
@@ -153,21 +146,28 @@ public class TypingTutorApp {
 					  done.set(true);  // signal stop
 					  pause.set(false); //set for safety
 					  gameWindow.repaint();
+
 					 //word movers waiting on starting line
 					   	for (int i=0;i<noWords;i++) {
 					     		try {
 					     			if (wrdShft[i].isAlive())	{
 									wrdShft[i].join();}
-
-									if (HWords.get(0).isAlive())	{
-										HWords.get(0).join();}
-
-									textEntry.setText("");//clear text Area before restarting game
 								} catch (InterruptedException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
 					    }
+						
+						//HUngryWordMover waiting on starting line
+						try{
+							if (HWords.get(0).isAlive())	{
+								HWords.get(0).join();}
+						}catch(InterruptedException e1){
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						textEntry.setText("");//clear text Area before restarting game
 				}
 		});  //finish addActionListener
 					
@@ -217,19 +217,21 @@ public class TypingTutorApp {
 
 
 		// initialize shared array of current words with the words for this game
+
+		//Create a hungryWord from the FallingWord class
 		HungryWords.add(new FallingWord(dict.getNewHungryWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit-40,true));
+		
 		HWords = new ArrayList<>();
-		//create threads to move HungryWords
-		HWords.add(new HungryWordMover(HungryWords.get(0),dict,score,startLatch,done,pause,sleepy));
+		//create thread to move HungryWord
+		HWords.add(new HungryWordMover(HungryWords.get(0),dict,score,startLatch,done,pause));
 
 		//create threads to move them
 	    for (int i=0;i<noWords;i++) {
 	    		wrdShft[i] = new WordMover(words,words[i],dict,HungryWords.get(0),score,startLatch,done,pause);
 	    }
 
-		// if(!sleepy.get()){
+		//HungryWordMover waiting on starting line 
 		(HWords.get(0)).start();
-		// }
 
         //word movers waiting on starting line 
      	for (int i=0;i<noWords;i++) {

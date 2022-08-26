@@ -18,7 +18,7 @@ public class FallingWord {
 		x=0;
 		y=0;	
 		maxY=400;
-		maxX=300;   // fro HungryWordMover
+		maxX=300;   
 		dropped=false;
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
 	}
@@ -29,6 +29,10 @@ public class FallingWord {
 	}
 	
 	
+	/*
+	 * Creates a new FallingWord. If the new word is a HungryWord the x-value is set to zero
+	 * and the y-vlaue is height/2 of screen
+	 */
 	FallingWord(String text,int x,int Y, int maxY, int maxX,boolean hungry) { //most commonly used constructor - sets it all.
 		this(text);
 		if(hungry){this.y = Y/2; this.x=0;}
@@ -96,10 +100,16 @@ public class FallingWord {
 		setY(0);
 	}
 
+	/*
+	 * Resets the position of the HungryWord, by resetting the x-value
+	 */
 	public synchronized void resetHungryPos() {
 		setX(0);
 	}
 
+	/*
+	 * Resets the position and value of HungryWord
+	 */
 	public synchronized void resetHungryWord(){
 		resetHungryPos();
 		word=dict.getNewHungryWord();
@@ -109,26 +119,38 @@ public class FallingWord {
 	}
 
 	/*
-	 * get the distance between two words
-	 * Assumption is that each letter in a word takes approximately 4 spaces
+	 * Get the distance of the of the longest word
+	 * Assumption is that each letter in a word takes approximately 4 spaces.
+	 * So the length of the longest word is multiplied by 4.
 	 */
-	public synchronized int getDistance(FallingWord w){
+	public synchronized int getLongLength(FallingWord w){
 		if ((w.getWord()).length() >= (this.word).length()){
 			return ((w.getWord()).length() *4);
 		}
 		return ((this.word).length() *4);
 	}
 
-	//checks if 2 words are colliding
+	/*
+	 * Checks if two FallingWord are colliding, by checking if the distance
+	 * between the x-values and the y-values is below the length of the longest word
+	 */
 	public synchronized boolean collide(FallingWord w){
-		int dist = getDistance(w);
-		int checkX = Math.abs(this.getX()-w.getX());
-		int checkY = Math.abs(this.getY()-w.getY());
+		int LongLength = getLongLength(w);  //get length of long word
+
+		// get distance between words
+		double checkX = Math.pow(this.getX()-w.getX(),2);
+		double checkY = Math.pow(this.getY()-w.getY(),2);
+		int distance = (int)Math.pow(checkX+checkY,0.5);
+		
+
+		//for checking if distance is calculated
 		// System.out.println(this.word); 
 		// System.out.println("(x,y): "+this.getX()+","+this.getY());
 		// System.out.println("H(x,y): "+w.getX()+","+w.getY());
-		// System.out.println("dist: "+dist); //for checking if distance is calculated
-		if ( checkX<=dist &&  checkY<=dist){
+		System.out.println("length: "+LongLength); 
+		System.out.println("dist: "+distance); 
+
+		if ( distance<=LongLength){
 			return true;
 		}
 		return false;

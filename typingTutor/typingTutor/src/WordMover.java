@@ -16,7 +16,7 @@ public class WordMover extends Thread {
 		myWord = word;
 	}
 	
-	WordMover( FallingWord[] words,FallingWord word,WordDictionary dict, 
+	WordMover( FallingWord[] wrds,FallingWord word,WordDictionary dict, 
 	FallingWord HungryWord, Score score,CountDownLatch startLatch, AtomicBoolean d, AtomicBoolean p) {
 
 		this(word);
@@ -24,11 +24,11 @@ public class WordMover extends Thread {
 		this.score=score;
 		this.done=d;
 		this.pause=p;
-		this.words = words;
+		words = wrds;
 		this.HungryWord = HungryWord;
 	}
 	
-	// sort Array so lowest word is selected
+	// sort Array accordeing to y-values, so that lowest word is selected
 	public static synchronized void mySort(){
 		Arrays.sort(words, new Comparator<FallingWord>() {
 			@Override
@@ -64,10 +64,11 @@ public class WordMover extends Thread {
 						}		
 						while(pause.get()&&!done.get()){}
 						
+						
+						//checks if the FallingWord is clashing with the the HungryWord
 						if (myWord.collide(HungryWord)) {
 							score.missedWord();
 							myWord.resetWord();
-							// HungryWord.resetHungryWord();
 							}
 				}
 					
