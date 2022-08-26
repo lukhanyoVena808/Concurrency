@@ -104,7 +104,7 @@ public class FallingWord {
 		resetHungryPos();
 		word=dict.getNewHungryWord();
 		dropped=false;
-		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
+		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait);
 		
 	}
 
