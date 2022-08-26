@@ -67,7 +67,7 @@ public class WordMover extends Thread {
 						if (myWord.collide(HungryWord)) {
 							score.missedWord();
 							myWord.resetWord();
-							HungryWord.resetHungryWord();
+							// HungryWord.resetHungryWord();
 							}
 				}
 					
