@@ -13,6 +13,7 @@ public class GamePanel extends JPanel implements Runnable {
 		private AtomicBoolean done ; //REMOVE
 		private AtomicBoolean started ; //REMOVE
 		private AtomicBoolean won ; //REMOVE
+		private AtomicBoolean sleepy;
 
 		private FallingWord[] words;
 		private ArrayList<FallingWord> Hwords;
@@ -20,13 +21,14 @@ public class GamePanel extends JPanel implements Runnable {
 		private final static int borderWidth=25; //appearance - border
 
 		GamePanel(FallingWord[] words, ArrayList Hwords, int maxY,	
-				 AtomicBoolean d, AtomicBoolean s, AtomicBoolean w) {
+				 AtomicBoolean d, AtomicBoolean s, AtomicBoolean w, AtomicBoolean sly) {
 			this.words=words; //shared word list
 			this.Hwords=Hwords; //shared word list
 			noWords = words.length; //only need to do this once
 			done=d; //REMOVE
 			started=s; //REMOVE
 			won=w; //REMOVE
+			sleepy = sly;
 		}
 		
 		public void paintComponent(Graphics g) {
@@ -36,8 +38,8 @@ public class GamePanel extends JPanel implements Runnable {
 		    g.setColor(Color.pink); //change colour of pen
 		    g.fillRect(borderWidth,height,width,borderWidth); //draw danger zone
 	
-		    g.setColor(Color.pink); //change colour of pen
-		    g.fillRect(width,borderWidth,borderWidth,height-borderWidth); //draw danger zone
+		    // g.setColor(Color.pink); //change colour of pen
+		    // g.fillRect(width,borderWidth,borderWidth,height-borderWidth); //draw danger zone
 
 		    g.setColor(Color.black);
 		    g.setFont(new Font("Arial", Font.PLAIN, 26));
@@ -53,9 +55,11 @@ public class GamePanel extends JPanel implements Runnable {
 					g.setColor(Color.black);	    	
 		    		g.drawString(words[i].getWord(),words[i].getX()+borderWidth,words[i].getY());
 		    	}
-				//Hungry
-				g.setColor(Color.GREEN);
-				g.drawString((Hwords.get(0)).getWord(),(Hwords.get(0)).getX()+borderWidth,(Hwords.get(0)).getY());
+				// //Hungry
+				// if(!sleepy.get()){
+					g.setColor(Color.GREEN);
+					g.drawString((Hwords.get(0)).getWord(),(Hwords.get(0)).getX()+borderWidth,(Hwords.get(0)).getY());
+				// }
 
 		    	g.setColor(Color.lightGray); //change colour of pen
 		    	g.fillRect(borderWidth,0,width,borderWidth);
@@ -78,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
 		public int getValidHeight() {
 			return getHeight()-borderWidth*2;
 		}
-		
+
 		public void run() {
 			while (true) {
 				repaint();

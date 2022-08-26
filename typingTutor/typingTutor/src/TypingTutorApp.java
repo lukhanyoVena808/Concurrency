@@ -44,7 +44,9 @@ public class TypingTutorApp {
 	static AtomicBoolean started;  
 	static AtomicBoolean pause;  
 	static AtomicBoolean done;  
-	static AtomicBoolean won; 
+	static AtomicBoolean won;
+
+	static AtomicBoolean sleepy; 
 	
 	static Score score = new Score();
 	static GamePanel gameWindow;
@@ -62,7 +64,7 @@ public class TypingTutorApp {
         g.setLayout(new BoxLayout(g, BoxLayout.PAGE_AXIS)); 
       	g.setSize(frameX,frameY);
  
-		gameWindow = new GamePanel(words,HungryWords,yLimit,done,started,won);
+		gameWindow = new GamePanel(words,HungryWords,yLimit,done,started,won, sleepy);
 		gameWindow.setSize(frameX,yLimit+100);
 	    g.add(gameWindow);
 	    
@@ -218,15 +220,16 @@ public class TypingTutorApp {
 		HungryWords.add(new FallingWord(dict.getNewHungryWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit-40,true));
 		HWords = new ArrayList<>();
 		//create threads to move HungryWords
-		HWords.add(new HungryWordMover(HungryWords.get(0),dict,score,startLatch,done,pause));
+		HWords.add(new HungryWordMover(HungryWords.get(0),dict,score,startLatch,done,pause,sleepy));
 
 		//create threads to move them
 	    for (int i=0;i<noWords;i++) {
 	    		wrdShft[i] = new WordMover(words,words[i],dict,HungryWords.get(0),score,startLatch,done,pause);
 	    }
 
-
+		// if(!sleepy.get()){
 		(HWords.get(0)).start();
+		// }
 
         //word movers waiting on starting line 
      	for (int i=0;i<noWords;i++) {
