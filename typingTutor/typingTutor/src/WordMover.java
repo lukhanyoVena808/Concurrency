@@ -1,11 +1,9 @@
-import java.util.Comparator;
-import java.util.Arrays;
+
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WordMover extends Thread {
 	private FallingWord myWord;
-	private static FallingWord[] words;
 	private FallingWord HungryWord;
 	private AtomicBoolean done;
 	private AtomicBoolean pause; 
@@ -16,32 +14,23 @@ public class WordMover extends Thread {
 		myWord = word;
 	}
 	
-	WordMover( FallingWord[] wrds,FallingWord word,WordDictionary dict, 
+	WordMover(FallingWord word,WordDictionary dict, 
 	FallingWord HungryWord, Score score,CountDownLatch startLatch, AtomicBoolean d, AtomicBoolean p) {
-
 		this(word);
 		this.startLatch = startLatch;
 		this.score=score;
 		this.done=d;
 		this.pause=p;
-		words = wrds;
 		this.HungryWord = HungryWord;
 	}
 	
-	// sort Array accordeing to y-values, so that lowest word is selected
-	public static synchronized void mySort(){
-		Arrays.sort(words, new Comparator<FallingWord>() {
-			@Override
-			public int compare(FallingWord o1, FallingWord o2) {
-				return o2.getY() - o1.getY();
-			}
-		});
-	}
-	
-	@Override
-	public void run() {
 
-		mySort();
+
+	@Override
+	/*
+	 * Drops FallingWord and checks if FallingWord is not colliding with the HungryWord
+	 */
+	public void run() {
 		try {
 			System.out.println(myWord.getWord() + " waiting to start " );
 			startLatch.await();
@@ -62,7 +51,7 @@ public class WordMover extends Thread {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}		
-						while(pause.get()&&!done.get()){}
+						while(pause.get()&&!done.get()){} //while paused do nothing
 						
 						
 						//checks if the FallingWord is clashing with the the HungryWord
@@ -71,7 +60,7 @@ public class WordMover extends Thread {
 							myWord.resetWord();
 							}
 				}
-
+					//if word is dropped, increase miss counter and reset word
 					if (!done.get() && myWord.dropped()) {
 						score.missedWord();
 						myWord.resetWord();

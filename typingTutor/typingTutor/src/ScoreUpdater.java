@@ -24,6 +24,9 @@ public class ScoreUpdater  implements Runnable {
         maxWords=max;
     }
 	
+	/*
+	 * Prints counters to screen
+	 */
 	public void run() {  //synchronize check-and-act
         while (true) {    	
                 caught.setText("Caught: " + score.getCaught() + "    ");

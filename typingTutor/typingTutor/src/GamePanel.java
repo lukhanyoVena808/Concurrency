@@ -3,7 +3,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Font;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
@@ -14,14 +13,14 @@ public class GamePanel extends JPanel implements Runnable {
 		private AtomicBoolean won ; //REMOVE
 
 		private FallingWord[] words;
-		private ArrayList<FallingWord> Hwords;
+		private FallingWord hungryWordFalling;  //hungryWord
 		private int noWords;
 		private final static int borderWidth=25; //appearance - border
 
-		GamePanel(FallingWord[] words, ArrayList Hwords, int maxY,	
+		GamePanel(FallingWord[] words, FallingWord Hwords, int maxY,	
 				 AtomicBoolean d, AtomicBoolean s, AtomicBoolean w) {
 			this.words=words; //shared word list
-			this.Hwords=Hwords; //shared word list
+			this.hungryWordFalling=Hwords; //shared word list
 			noWords = words.length; //only need to do this once
 			done=d; //REMOVE
 			started=s; //REMOVE
@@ -44,8 +43,8 @@ public class GamePanel extends JPanel implements Runnable {
 		   //draw the words
 		    if (!started.get()) {
 
-		    	g.setFont(new Font("Arial", Font.BOLD, 20));
-				g.drawString("Type all the words before they hit the red zone,press enter after each one.",borderWidth*2-20,height/2);	
+		    	g.setFont(new Font("Arial", Font.BOLD, 24));
+				g.drawString("Type all the words before they hit the red zone,press enter after each one.",borderWidth*2-18,height/2);	
 		    	
 		    }
 		    else if (!done.get()) {
@@ -57,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 				    //Draw the HungryWord on the screen
 					g.setColor(Color.GREEN);
-					g.drawString((Hwords.get(0)).getWord(),(Hwords.get(0)).getX()+borderWidth,(Hwords.get(0)).getY());
+					g.drawString(hungryWordFalling.getWord(),(hungryWordFalling).getX()+borderWidth,(hungryWordFalling).getY());
 				
 
 		    	g.setColor(Color.lightGray); //change colour of pen
@@ -66,26 +65,24 @@ public class GamePanel extends JPanel implements Runnable {
 		   else { if (won.get()) {
 			   g.setFont(new Font("Arial", Font.BOLD, 36));
 			   g.drawString("Well done!",width/3,height/2);	
-		   } else {
-			   g.setFont(new Font("Arial", Font.BOLD, 36));
-			   g.drawString("Game over!",width/2,height/2);	
-		   }
+		   		} else {
+				g.setFont(new Font("Arial", Font.BOLD, 36));
+				g.drawString("Game over!",width/2,height/2);	
+		   		}
 		   }
 		}
 		
+
+		/*
+		 * Returns a random x-position
+		 */
 		public int getValidXpos() {
 			int width = getWidth()-(borderWidth*8);
 			int x= (int)(Math.random() * width);
 			return x;
 		}
 
-		/*
-		 * Get the height of the screen 
-		 */
-		public int getValidHeight() {
-			return getHeight()-borderWidth*2;
-		}
-
+		
 		public void run() {
 			while (true) {
 				repaint();
@@ -93,7 +90,7 @@ public class GamePanel extends JPanel implements Runnable {
 					Thread.sleep(10); 
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				};
+				}
 			}
 		}
 

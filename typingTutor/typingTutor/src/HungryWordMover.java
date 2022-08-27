@@ -31,6 +31,10 @@ public class HungryWordMover extends Thread {
 	
 	
 	
+	@Override
+	/*
+	 * Drops HungryWords and increases missed Counter if the HungryWord is missed
+	 */
 	public void run() {
 
 		//System.out.println(myWord.getWord() + " falling speed = " + myWord.getSpeed());
@@ -56,11 +60,10 @@ public class HungryWordMover extends Thread {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}		
-						while(pause.get()&&!done.get()){}
+						while(pause.get()&&!done.get()){}   //while paused do nothing
 				}
 					
-
-					// Checks if the HungryWord is dropped and reset it
+					// Checks if the HungryWord is dropped and resets it
 					if (!done.get() && myWord.dropped()) {
 						score.missedWord();
 						myWord.resetHungryWord();

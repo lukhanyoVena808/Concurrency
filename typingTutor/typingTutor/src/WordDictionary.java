@@ -11,6 +11,9 @@ public class WordDictionary {
 	static String [] theHungryDict= {"Bacon","Beef","Buffalo","Dusk","Goose","Liver","Mutton","Partridge","Pheasant","Pork","Quail","Rabbit","Veal","Chicken","Turkey","Cornish","Caviar","Clam","Conch","Crab","Eel","Flounder","Sole","Haddock","Halibut","Herring","Lobster","Lox"}; 
 
 	
+	/*
+	 * Creates Dictionary from user text file dictionary
+	 */
 	WordDictionary(String [] tmp) {
 		size = tmp.length;
 		theDict = new String[size];
@@ -20,15 +23,20 @@ public class WordDictionary {
 		
 	}
 	
+	/*
+	 * Get size of Dictionary
+	 */
 	WordDictionary() {
 		size=theDict.length;
 	}
 	
+	/*
+	 * Returns a random from the Dictionary
+	 */
 	public synchronized String getNewWord() {
 		int wdPos= (int)(Math.random() * size);
 		return theDict[wdPos];
 	}
-
 
 
 	/*

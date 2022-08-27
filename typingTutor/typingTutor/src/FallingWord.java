@@ -43,11 +43,17 @@ public class FallingWord {
 	}
 
 	
+	/*
+	 * Increase speed of FallingWords
+	 */
 	public static void increaseSpeed( ) {
 		minWait+=50;
 		maxWait+=50;
 	}
 	
+	/*
+	 * Resets teh speed to default speed
+	 */
 	public static void resetSpeed( ) {
 		maxWait=1000;
 		minWait=100;
@@ -64,7 +70,7 @@ public class FallingWord {
 	}
 	
 	/*
-	 * Modified method. If the x value goes beyond max, the word set to dropped,
+	 * Modified method. If the x value goes beyond max, the word is set to dropped,
 	 * else just set the x-value
 	 */
 	public synchronized  void setX(int x) {
@@ -75,6 +81,9 @@ public class FallingWord {
 		this.x=x;
 	}
 	
+	/* 
+	 * Sets the value of a FallingWord
+	*/
 	public synchronized  void setWord(String text) {
 		this.word=text;
 	}
@@ -83,23 +92,39 @@ public class FallingWord {
 		return word;
 	}
 	
+
+	/* 
+	 * Returns the the x-value of a FallingWord
+	*/
 	public synchronized  int getX() {
 		return x;
 	}	
 	
+	/* 
+	 * Returns the the y-value of a FallingWord
+	*/
 	public synchronized  int getY() {
 		return y;
 	}
 	
+	/*
+	 * Returns the speed of the FallingWord
+	 */
 	public synchronized  int getSpeed() {
 		return fallingSpeed;
 	}
 
-	//change how sync here
+	/*
+	 * Resets both x and y values of a FallingWord
+	 */
 	public void setPos(int x, int y) {
 		setY(y);
 		setX(x);
 	}
+
+	/*
+	 * Resets the y-value of a FallingWord
+	 */
 	public synchronized void resetPos() {
 		setY(0);
 	}
@@ -137,23 +162,26 @@ public class FallingWord {
 	}
 
 	/*
-	 * Checks if two FallingWord are colliding, by checking if the distance
-	 * between the x-values and the y-values is below the length of the longest word
+	 * Checks if two FallingWords are colliding, by checking if the distance
+	 * between the words is below the length of the longest word
 	 */
 	public synchronized boolean collide(FallingWord w){
-		int LongLength = getLongLength(w);
-		double checkX = Math.pow(this.getX()-w.getX(),2);
-		double checkY = Math.pow(this.getY()-w.getY(),2);
-		int distance = (int)Math.pow(checkX+checkY, 0.5);
+		int LongLength = getLongLength(w);  //get Longest Distance
+		double checkX = Math.pow(this.getX()-w.getX(),2);  // (x1-x2)^2
+		double checkY = Math.pow(this.getY()-w.getY(),2);  //(y1-y2)^2
+		int distance = (int)Math.pow(checkX+checkY, 0.5); ///get distance sqrt(x^2 + y^2)
 		 //for checking if distance is calculated
 		// System.out.println(this.word); 
 		// System.out.println("(x,y): "+this.getX()+","+this.getY());
 		// System.out.println("H(x,y): "+w.getX()+","+w.getY());
-		// System.out.println("dist: "+dist);
+		// System.out.println("dist: "+distance);
 		if ( distance<=LongLength){return true;}
 		return false;
 	}
 
+	/*
+	 * Resets the position and value of a FallingWord
+	 */
 	public synchronized void resetWord() {
 		resetPos();
 		word=dict.getNewWord();
@@ -163,8 +191,8 @@ public class FallingWord {
 	}
 	
 	/*
-	 * Modified Method. If the matche Word is a HungryWord, 
-	 * then reset the HungryWord, else check if word matches with 
+	 * Modified Method. If the matched Word is a HungryWord, 
+	 * then reset the HungryWord, else check if word matches with a 
 	 * FallingWord
 	 */
 	public synchronized boolean matchWord(String typedText, boolean isHungry) {
@@ -177,6 +205,9 @@ public class FallingWord {
 			return false;
 	}
 
+	/*
+	 * Drops FallingWord by increasing the y-value
+	 */
 	public synchronized  void drop(int inc) {
 		setY(y+inc);
 	}

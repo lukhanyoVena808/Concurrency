@@ -1,7 +1,6 @@
 
 
 import javax.swing.*;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,17 +21,18 @@ public class TypingTutorApp {
    	static int frameX=1000;
 	static int frameY=600;
 	static int yLimit=480;
-	static int xLimit=900;
+	static int xLimit=860;
+	static int hungryHeight = 518;
 
 	static WordDictionary dict = new WordDictionary(); //use default dictionary, to read from file eventually
 
 	static FallingWord[] words;
 
-	//Array that holds HungryWordMover Threads
-	static ArrayList<HungryWordMover> HWords = new ArrayList<>();
+	//holds HungryWordMover Threads
+	static HungryWordMover HungryThead;
 	
-	//Array that holds HungryWords (FallingWords)
-	static ArrayList<FallingWord> HungryWords = new ArrayList<>();
+	//holds HungryWord (FallingWord)
+	static FallingWord hungryWordFalling;
 
 	static WordMover[] wrdShft;
 	static CountDownLatch startLatch; //so threads can start at once
@@ -58,7 +58,7 @@ public class TypingTutorApp {
         g.setLayout(new BoxLayout(g, BoxLayout.PAGE_AXIS)); 
       	g.setSize(frameX,frameY);
  
-		gameWindow = new GamePanel(words,HungryWords,yLimit,done,started,won);
+		gameWindow = new GamePanel(words, hungryWordFalling,yLimit,done,started,won);
 		gameWindow.setSize(frameX,yLimit+100);
 	    g.add(gameWindow);
 	    
@@ -162,8 +162,8 @@ public class TypingTutorApp {
 					    }
 							//HungryWordMovers waiting on starting line
 							try {
-							if (HWords.get(0).isAlive())	{
-								HWords.get(0).join();}
+								if (HungryThead.isAlive())	{
+									HungryThead.join();}
 						} catch (InterruptedException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -215,25 +215,20 @@ public class TypingTutorApp {
 		score.reset();	
 		// initialize shared array of current words with the words for this game	
 		for (int i=0;i<noWords;i++) {
-			words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos()-10,gameWindow.getValidHeight(),yLimit,xLimit,false);
+			words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos()-10,0,yLimit,xLimit,false);
 		}
 
-
-		// Create HungryWord (FallingWord)
-		HungryWords.add(new FallingWord(dict.getNewHungryWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit-40,true));
-
-		HWords = new ArrayList<>();
 		//create thread to move HungryWords
-		HWords.add(new HungryWordMover(HungryWords.get(0),dict,score,startLatch,done,pause));
-
+		HungryThead = new HungryWordMover(hungryWordFalling,dict,score,startLatch,done,pause);
+		 
 		//create threads to move FallingWord them
 	    for (int i=0;i<noWords;i++) {
-	    		wrdShft[i] = new WordMover(words,words[i],dict,HungryWords.get(0),score,startLatch,done,pause);
+	    		wrdShft[i] = new WordMover(words[i],dict,hungryWordFalling,score,startLatch,done,pause);
 	    }
 
 
 		//HungryWordMover waiting on starting line 
-		(HWords.get(0)).start();
+		HungryThead.start();
 
         //word movers waiting on starting line 
      	for (int i=0;i<noWords;i++) {
@@ -270,6 +265,9 @@ public static void main(String[] args) {
 		totalWords=24;
 		noWords=6;
 		dict= new WordDictionary();
+
+		//Create HungryWord (FallingWord)
+		hungryWordFalling = new FallingWord(dict.getNewHungryWord(),0,hungryHeight,yLimit,xLimit,true);
 		
 		//deal with command line arguments
 		if (args.length==2) {
@@ -290,7 +288,7 @@ public static void main(String[] args) {
 		words = new FallingWord[noWords];  //array for the  current chosen words from dict
 		wrdShft = new WordMover[noWords]; //array for the threads that animate the words
 		CatchWord.setWords(words);  //class setter - static method
-		CatchWord.setHungryWords(HungryWords);  //class setter - static method
+		CatchWord.setHungryWord(hungryWordFalling);  //class setter - static method
 		CatchWord.setScore(score);  //class setter - static method
 		CatchWord.setFlags(done,pause); //class setter - static method
 
