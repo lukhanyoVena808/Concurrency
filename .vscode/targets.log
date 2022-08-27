@@ -4,23 +4,22 @@ make: *** No rule to make target 'all'.  Stop.
 # GNU Make 4.3
  
 # Built for x86_64-pc-cygwin
- 
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Sat Aug 27 18:21:52 2022
+# Make data base, printed on Sat Aug 27 18:32:59 2022
 
 # Variables
 
- 
 # environment
 SYSTEMDRIVE = C:
 # environment
 LC_ALL = C
 # environment
+ 
 USERPROFILE = C:\Users\Student
 # environment
 VBOX_MSI_INSTALL_PATH = C:\Program Files\Oracle\VirtualBox\
@@ -43,7 +42,7 @@ MAKE_COMMAND := make
 # environment
 DOKANLIBRARY1_LIBRARYPATH_X64 = C:\Program Files\Dokan\Dokan Library-1.4.1\lib\
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_748_VOXQYAQTSWQXVZUO
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_13908_ZSZHXQKHEZDCRVOP
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -93,7 +92,7 @@ MAKEFILE_LIST :=
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 748
+VSCODE_PID = 13908
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -110,7 +109,6 @@ MAKE_HOST := x86_64-pc-cygwin
 PROGRAMDATA = C:\ProgramData
 # default
 SHELL := /bin/sh
- 
 # environment
 HOMEPATH = \Users\Student
 # default
@@ -137,6 +135,7 @@ MAKEFILES :=
 ^F = $(notdir $^)
 # environment
 PROMPT = $P$G
+ 
 # environment
 LOGONSERVER = \\DESKTOP-T826O88
 # environment
@@ -217,7 +216,6 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 10, GenuineIntel
 # Load=98/1024=10%, Rehash=0, Collisions=11/122=9%
 
 # Pattern-specific Variable Values
- 
 
 # No pattern-specific variable values.
 
@@ -238,6 +236,7 @@ Makefile:
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
+ 
 #  Failed to be updated.
 
 # Not a target:
@@ -281,6 +280,6 @@ GNUmakefile:
 # strcache performance: lookups = 16 / hit rate = 18%
 # hash-table stats:
 # Load=13/8192=0%, Rehash=0, Collisions=0/16=0%
-# Finished Make data base on Sat Aug 27 18:21:52 2022
+# Finished Make data base on Sat Aug 27 18:32:59 2022
 
  

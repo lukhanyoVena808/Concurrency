@@ -21,7 +21,7 @@ public class TypingTutorApp {
    	static int frameX=1000;
 	static int frameY=600;
 	static int yLimit=480;
-	static int xLimit=840;
+	static int xLimit=800;
 	static int hungryHeight = 518;
 
 	static WordDictionary dict = new WordDictionary(); //use default dictionary, to read from file eventually
