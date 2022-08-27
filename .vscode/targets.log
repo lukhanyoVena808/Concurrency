@@ -2,17 +2,20 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 make: *** No rule to make target 'all'.  Stop.
 
 # GNU Make 4.3
+ 
 # Built for x86_64-pc-cygwin
+ 
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Sat Aug 27 16:40:50 2022
+# Make data base, printed on Sat Aug 27 18:21:52 2022
 
 # Variables
 
+ 
 # environment
 SYSTEMDRIVE = C:
 # environment
@@ -24,7 +27,7 @@ VBOX_MSI_INSTALL_PATH = C:\Program Files\Oracle\VirtualBox\
 # environment
 LOCALAPPDATA = C:\Users\Student\AppData\Local
 # environment
-VSCODE_CWD = C:\Users\Student\Documents\Courses\2022\CSC2002S\Assignments\typingTutor
+VSCODE_CWD = C:\Users\Student\AppData\Local\Programs\Microsoft VS Code
 # environment
 CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
@@ -40,7 +43,7 @@ MAKE_COMMAND := make
 # environment
 DOKANLIBRARY1_LIBRARYPATH_X64 = C:\Program Files\Dokan\Dokan Library-1.4.1\lib\
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_12120_OFZYPHWSNLITXIIE
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_748_VOXQYAQTSWQXVZUO
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -52,7 +55,6 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 %F = $(notdir $%)
 # environment
- 
 VSCODE_CODE_CACHE_PATH = C:\Users\Student\AppData\Roaming\Code\CachedData\e4503b30fc78200f846c62cf8091b76ff5547662
 # environment
 LANG = C
@@ -91,7 +93,7 @@ MAKEFILE_LIST :=
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 12120
+VSCODE_PID = 748
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -108,6 +110,7 @@ MAKE_HOST := x86_64-pc-cygwin
 PROGRAMDATA = C:\ProgramData
 # default
 SHELL := /bin/sh
+ 
 # environment
 HOMEPATH = \Users\Student
 # default
@@ -204,10 +207,6 @@ SUFFIXES :=
 ALLUSERSPROFILE = C:\ProgramData
 # environment
 SESSIONNAME = Console
-# environment
-VSCODE_CLI = 1
-# environment
-ELECTRON_NO_ATTACH_CONSOLE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink guile load
 # environment
@@ -215,9 +214,10 @@ PROCESSOR_REVISION = 8e0a
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 10, GenuineIntel
 # variable set hash-table stats:
-# Load=100/1024=10%, Rehash=0, Collisions=11/124=9%
+# Load=98/1024=10%, Rehash=0, Collisions=11/122=9%
 
 # Pattern-specific Variable Values
+ 
 
 # No pattern-specific variable values.
 
@@ -245,7 +245,6 @@ Makefile:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 
 # Not a target:
 all:
@@ -282,6 +281,6 @@ GNUmakefile:
 # strcache performance: lookups = 16 / hit rate = 18%
 # hash-table stats:
 # Load=13/8192=0%, Rehash=0, Collisions=0/16=0%
-# Finished Make data base on Sat Aug 27 16:40:50 2022
+# Finished Make data base on Sat Aug 27 18:21:52 2022
 
  

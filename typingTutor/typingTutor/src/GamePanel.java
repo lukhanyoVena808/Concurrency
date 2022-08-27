@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
 		    if (!started.get()) {
 
 		    	g.setFont(new Font("Arial", Font.BOLD, 24));
-				g.drawString("Type all the words before they hit the red zone,press enter after each one.",borderWidth*2-18,height/2);	
+				g.drawString("Type all the words before they hit the red zone,press enter after each one.",borderWidth*2-20,height/2);	
 		    	
 		    }
 		    else if (!done.get()) {
