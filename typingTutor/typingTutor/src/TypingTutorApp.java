@@ -215,7 +215,7 @@ public class TypingTutorApp {
 		score.reset();	
 		// initialize shared array of current words with the words for this game	
 		for (int i=0;i<noWords;i++) {
-			words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,false);
+			words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos()-10,gameWindow.getValidHeight(),yLimit,xLimit,false);
 		}
 
 
