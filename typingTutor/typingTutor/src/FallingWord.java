@@ -167,8 +167,8 @@ public class FallingWord {
 	 */
 	public synchronized boolean collide(FallingWord w){
 		int LongLength = getLongLength(w);  //get Longest Distance
-		double checkX = Math.pow(this.getX()-w.getX(),2);  // (x1-x2)^2
-		double checkY = Math.pow(this.getY()-w.getY(),2);  //(y1-y2)^2
+		double checkX = Math.pow((double)this.getX()-w.getX(),2);  // (x1-x2)^2
+		double checkY = Math.pow((double)this.getY()-w.getY(),2);  //(y1-y2)^2
 		int distance = (int)Math.pow(checkX+checkY, 0.5); ///get distance sqrt(x^2 + y^2)
 		 //for checking if distance is calculated
 		// System.out.println(this.word); 
