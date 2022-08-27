@@ -7,8 +7,9 @@ public class WordDictionary {
 		"cranberry","blueberry","rhubarb","fruit","grapefruit","kumquat","tomato","berry",
 		"boysenberry","loquat","avocado"}; //default dictionary
 
-	static String [] theHungryDict= {"Bacon","Beef","Buffalo","Dusk","Goose","Liver","Mutton","Partridge","Pheasant","Pork","Quail","Rabbit","Veal","Chicken","Turkey","Cornish","Caviar","Clam","Conch","Crab","Eel","Flounder","Sole","Haddock","Halibut","Herring","Lobster","Lox"}; // same size as default dictionary
-	// "Mussels","Octopus","Oysters","Scallop","Shrimp"
+	//A dictionary for HungryWords,same size as default dictionary
+	static String [] theHungryDict= {"Bacon","Beef","Buffalo","Dusk","Goose","Liver","Mutton","Partridge","Pheasant","Pork","Quail","Rabbit","Veal","Chicken","Turkey","Cornish","Caviar","Clam","Conch","Crab","Eel","Flounder","Sole","Haddock","Halibut","Herring","Lobster","Lox"}; 
+
 	
 	WordDictionary(String [] tmp) {
 		size = tmp.length;
@@ -28,6 +29,9 @@ public class WordDictionary {
 		return theDict[wdPos];
 	}
 
+	/*
+	 * Returns a random from the HungryWord Dictionary
+	 */
 	public synchronized String getNewHungryWord() {
 		int wdPos= (int)(Math.random() * size);
 		return theHungryDict[wdPos].toLowerCase();

@@ -24,5 +24,8 @@ clean:
 	rm $(BINDIR)/*.class
 
 
+# wm -> numbers of total words to fall
+# nw -> number of words to fall at a time on the screen
+# dit -> dictionary file of words to fall
 App: $(CLASS_FILES)
-	java -cp $(BINDIR) TypingTutorApp $(nw) $(tw) $(dict)
+	java -cp $(BINDIR) TypingTutorApp $(tw) $(nw) $(dict)

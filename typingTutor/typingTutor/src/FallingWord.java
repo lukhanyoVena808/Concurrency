@@ -4,7 +4,7 @@ public class FallingWord {
 	private int x; //position - width
 	private int y; // postion - height
 	private int maxY; //maximum height
-	private int maxX; //maximum height
+	private int maxX; //maximum width
 	private boolean dropped; //flag for if user does not manage to catch word in time
 	
 	private int fallingSpeed; //how fast this word is
@@ -18,7 +18,7 @@ public class FallingWord {
 		x=0;
 		y=0;	
 		maxY=400;
-		maxX=300;   // fro HungryWordMover
+		maxX=300;   
 		dropped=false;
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
 	}
@@ -28,10 +28,13 @@ public class FallingWord {
 		this.word=text;
 	}
 	
-	
-	FallingWord(String text,int x,int Y, int maxY, int maxX,boolean hungry) { //most commonly used constructor - sets it all.
+	/*
+	 * Initiates the constructor of a FallingWord. If the FallingWord is
+	 * a HungryWord, the x-coordinate is set to zero and the y-value is set to height/2.
+	 */
+	FallingWord(String text,int x,int Y, int maxY, int maxX,boolean isHungryWord) { //most commonly used constructor - sets it all.
 		this(text);
-		if(hungry){this.y = Y/2; this.x=0;}
+		if(isHungryWord){this.y = Y/2; this.x=0;}
 		else{this.x=x;} //only need to set x, word is at top of screen at start
 
 		this.maxY=maxY;
@@ -59,6 +62,10 @@ public class FallingWord {
 		this.y=y;
 	}
 	
+	/*
+	 * Modified method. If the x value goes beyond max, the word set to dropped,
+	 * else just set the x-value
+	 */
 	public synchronized  void setX(int x) {
 		if (x>maxX) {
 			x=maxX;
@@ -96,10 +103,16 @@ public class FallingWord {
 		setY(0);
 	}
 
+	/*
+	 * HungryWord Method. Resets the x-value of the HungryWord
+	 */
 	public synchronized void resetHungryPos() {
 		setX(0);
 	}
 
+	/*
+	 * Resets the value and x-coordinate of the HungryWord
+	 */
 	public synchronized void resetHungryWord(){
 		resetHungryPos();
 		word=dict.getNewHungryWord();
@@ -112,7 +125,7 @@ public class FallingWord {
 	 * get the distance between two words
 	 * Assumption is that each letter in a word takes approximately 4 spaces
 	 */
-	public synchronized int getDistance(FallingWord w){
+	public synchronized int getLongLength(FallingWord w){
 		if ((w.getWord()).length() >= (this.word).length()){
 			return ((w.getWord()).length() *4);
 		}
@@ -121,16 +134,16 @@ public class FallingWord {
 
 	//checks if 2 words are colliding
 	public synchronized boolean collide(FallingWord w){
-		int dist = getDistance(w);
-		int checkX = Math.abs(this.getX()-w.getX());
-		int checkY = Math.abs(this.getY()-w.getY());
+		int LongLength = getLongLength(w);
+		double checkX = Math.pow(this.getX()-w.getX(),2);
+		double checkY = Math.pow(this.getY()-w.getY(),2);
+		int distance = (int)Math.pow(checkX+checkY, 0.5);
+		 //for checking if distance is calculated
 		// System.out.println(this.word); 
 		// System.out.println("(x,y): "+this.getX()+","+this.getY());
 		// System.out.println("H(x,y): "+w.getX()+","+w.getY());
-		// System.out.println("dist: "+dist); //for checking if distance is calculated
-		if ( checkX<=dist &&  checkY<=dist){
-			return true;
-		}
+		// System.out.println("dist: "+dist);
+		if ( distance<=LongLength){return true;}
 		return false;
 	}
 
@@ -142,8 +155,12 @@ public class FallingWord {
 	
 	}
 	
+	/*
+	 * Modified Method. If the matche Word is a HungryWord, 
+	 * then reset the HungryWord, else check if word matches with 
+	 * FallingWord
+	 */
 	public synchronized boolean matchWord(String typedText, boolean isHungry) {
-		
 		if (typedText.equals(this.word)) {
 			if(isHungry){ resetHungryWord();}
 			else{ resetWord();}
@@ -157,7 +174,9 @@ public class FallingWord {
 		setY(y+inc);
 	}
 
-	//Shift Hungry Word
+	/*
+	 * Drop hungryWord by increasing its x-value, shifting it horizontally
+	 */
 	public synchronized  void dropHungryWord(int inc) {
 		setX(x+inc);
 	}

@@ -16,7 +16,7 @@ public class WordMover extends Thread {
 		myWord = word;
 	}
 	
-	WordMover( FallingWord[] words,FallingWord word,WordDictionary dict, 
+	WordMover( FallingWord[] wrds,FallingWord word,WordDictionary dict, 
 	FallingWord HungryWord, Score score,CountDownLatch startLatch, AtomicBoolean d, AtomicBoolean p) {
 
 		this(word);
@@ -24,7 +24,7 @@ public class WordMover extends Thread {
 		this.score=score;
 		this.done=d;
 		this.pause=p;
-		this.words = words;
+		words = wrds;
 		this.HungryWord = HungryWord;
 	}
 	
@@ -38,10 +38,10 @@ public class WordMover extends Thread {
 		});
 	}
 	
+	@Override
 	public void run() {
 
 		mySort();
-		//System.out.println(myWord.getWord() + " falling speed = " + myWord.getSpeed());
 		try {
 			System.out.println(myWord.getWord() + " waiting to start " );
 			startLatch.await();
@@ -64,14 +64,13 @@ public class WordMover extends Thread {
 						}		
 						while(pause.get()&&!done.get()){}
 						
+						//checks if the word collides with the HungryWord Mover
 						if (myWord.collide(HungryWord)) {
 							score.missedWord();
 							myWord.resetWord();
-							// HungryWord.resetHungryWord();
 							}
 				}
-					
-				
+
 					if (!done.get() && myWord.dropped()) {
 						score.missedWord();
 						myWord.resetWord();
