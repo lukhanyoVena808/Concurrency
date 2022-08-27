@@ -64,12 +64,8 @@ public class WordMover extends Thread {
 						}		
 						while(pause.get()&&!done.get()){}
 						
-<<<<<<< HEAD
-						//checks if the word collides with the HungryWord Mover
-=======
 						
 						//checks if the FallingWord is clashing with the the HungryWord
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 						if (myWord.collide(HungryWord)) {
 							score.missedWord();
 							myWord.resetWord();

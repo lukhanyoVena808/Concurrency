@@ -5,13 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-<<<<<<< HEAD
-=======
-/*
- * Updated the class by making all functions synchronized
- */
 
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 //Thread to monitor the word that has been typed.
 public class CatchWord extends Thread {
 	String target;
@@ -46,11 +40,9 @@ public class CatchWord extends Thread {
 		pause=p;
 	}
 
-<<<<<<< HEAD
-	// sort Array according to y-values,  so that lowest word is selected
-=======
+
 	// sort Array according to y-values , so that lowest word is selected
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
+
 	public static synchronized void mySort(){
 		Arrays.sort(words, new Comparator<FallingWord>() {
 			@Override
@@ -71,11 +63,7 @@ public class CatchWord extends Thread {
 					break;
 				}
 
-<<<<<<< HEAD
-				//check if HungryWord is typed
-=======
 				//check if the typed word is the HungryWord
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 				if ((HungryWords.get(0)).matchWord(target, true) && !pause.get()) {
 					System.out.println( " score! " + target); //for checking
 					score.caughtWord(target.length());	

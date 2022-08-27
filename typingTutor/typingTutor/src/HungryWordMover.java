@@ -2,17 +2,11 @@
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-<<<<<<< HEAD
 
-/*
- * @author: Lukhanyo Vena 
- * Program to create a thread for the HungryWordr
-=======
 /*
  * @author: Lukhanyo Vena
  * The hungryWordMOver IS A THREAD using a FallingWord.
  * The hungryWord is dropped (horizontally) until it reaches end of screen
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
  */
 
 public class HungryWordMover extends Thread {
@@ -65,11 +59,8 @@ public class HungryWordMover extends Thread {
 						while(pause.get()&&!done.get()){}
 				}
 					
-<<<<<<< HEAD
-					//if the HungryWord is dropped, increase miss counter and reset word
-=======
+
 					// Checks if the HungryWord is dropped and reset it
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 					if (!done.get() && myWord.dropped()) {
 						score.missedWord();
 						myWord.resetHungryWord();

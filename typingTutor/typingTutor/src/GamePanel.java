@@ -35,23 +35,16 @@ public class GamePanel extends JPanel implements Runnable {
 		    g.setColor(Color.pink); //change colour of pen
 		    g.fillRect(borderWidth,height,width,borderWidth); //draw danger zone
 	
-<<<<<<< HEAD
-		    //draw danger zone for the HungryWord
-		    g.fillRect(width,borderWidth,borderWidth,height-borderWidth); //draw danger zone
-=======
+
 			//draw danger zone for the HungryWord
 		    g.fillRect(width,borderWidth,borderWidth,height-borderWidth);
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 
 		    g.setColor(Color.black);
 		    g.setFont(new Font("Arial", Font.PLAIN, 26));
 		   //draw the words
 		    if (!started.get()) {
-<<<<<<< HEAD
-		    	g.setFont(new Font("Arial", Font.BOLD, 23));
-=======
+
 		    	g.setFont(new Font("Arial", Font.BOLD, 20));
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 				g.drawString("Type all the words before they hit the red zone,press enter after each one.",borderWidth*2-20,height/2);	
 		    	
 		    }
@@ -61,16 +54,11 @@ public class GamePanel extends JPanel implements Runnable {
 					g.setColor(Color.black);	    	
 		    		g.drawString(words[i].getWord(),words[i].getX()+borderWidth,words[i].getY());
 		    	}
-<<<<<<< HEAD
-					//Draw hunugryWord on SCreen
-					g.setColor(Color.GREEN);
-					g.drawString((Hwords.get(0)).getWord(),(Hwords.get(0)).getX()+borderWidth,(Hwords.get(0)).getY());
-=======
+
 				    //Draw the HungryWord on the screen
 					g.setColor(Color.GREEN);
 					g.drawString((Hwords.get(0)).getWord(),(Hwords.get(0)).getX()+borderWidth,(Hwords.get(0)).getY());
 				
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 
 		    	g.setColor(Color.lightGray); //change colour of pen
 		    	g.fillRect(borderWidth,0,width,borderWidth);
@@ -92,11 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 
 		/*
-<<<<<<< HEAD
 		 * Get the height of the screen 
-=======
-		 * Get the  height of the screen
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 		 */
 		public int getValidHeight() {
 			return getHeight()-borderWidth*2;

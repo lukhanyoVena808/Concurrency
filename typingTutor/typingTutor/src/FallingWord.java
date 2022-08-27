@@ -27,21 +27,13 @@ public class FallingWord {
 		this();
 		this.word=text;
 	}
-	
-<<<<<<< HEAD
-	/*
-	 * Initiates the constructor of a FallingWord. If the FallingWord is
-	 * a HungryWord, the x-coordinate is set to zero and the y-value is set to height/2.
-	 */
-	FallingWord(String text,int x,int Y, int maxY, int maxX,boolean isHungryWord) { //most commonly used constructor - sets it all.
-=======
+
 	
 	/*
 	 * Creates a new FallingWord. If the new word is a HungryWord the x-value is set to zero
 	 * and the y-vlaue is height/2 of screen
 	 */
-	FallingWord(String text,int x,int Y, int maxY, int maxX,boolean hungry) { //most commonly used constructor - sets it all.
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
+	FallingWord(String text,int x,int Y, int maxY, int maxX,boolean isHungryWord) { //most commonly used constructor - sets it all.
 		this(text);
 		if(isHungryWord){this.y = Y/2; this.x=0;}
 		else{this.x=x;} //only need to set x, word is at top of screen at start
@@ -113,22 +105,16 @@ public class FallingWord {
 	}
 
 	/*
-<<<<<<< HEAD
 	 * HungryWord Method. Resets the x-value of the HungryWord
-=======
 	 * Resets the position of the HungryWord, by resetting the x-value
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 	 */
 	public synchronized void resetHungryPos() {
 		setX(0);
 	}
 
 	/*
-<<<<<<< HEAD
 	 * Resets the value and x-coordinate of the HungryWord
-=======
 	 * Resets the position and value of HungryWord
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 	 */
 	public synchronized void resetHungryWord(){
 		resetHungryPos();
@@ -155,7 +141,6 @@ public class FallingWord {
 	 * between the x-values and the y-values is below the length of the longest word
 	 */
 	public synchronized boolean collide(FallingWord w){
-<<<<<<< HEAD
 		int LongLength = getLongLength(w);
 		double checkX = Math.pow(this.getX()-w.getX(),2);
 		double checkY = Math.pow(this.getY()-w.getY(),2);
@@ -166,26 +151,6 @@ public class FallingWord {
 		// System.out.println("H(x,y): "+w.getX()+","+w.getY());
 		// System.out.println("dist: "+dist);
 		if ( distance<=LongLength){return true;}
-=======
-		int LongLength = getLongLength(w);  //get length of long word
-
-		// get distance between words
-		double checkX = Math.pow(this.getX()-w.getX(),2);
-		double checkY = Math.pow(this.getY()-w.getY(),2);
-		int distance = (int)Math.pow(checkX+checkY,0.5);
-		
-
-		//for checking if distance is calculated
-		// System.out.println(this.word); 
-		// System.out.println("(x,y): "+this.getX()+","+this.getY());
-		// System.out.println("H(x,y): "+w.getX()+","+w.getY());
-		System.out.println("length: "+LongLength); 
-		System.out.println("dist: "+distance); 
-
-		if ( distance<=LongLength){
-			return true;
-		}
->>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 		return false;
 	}
 
