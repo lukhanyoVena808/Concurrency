@@ -149,6 +149,7 @@ public class TypingTutorApp {
 					  done.set(true);  // signal stop
 					  pause.set(false); //set for safety
 					  gameWindow.repaint();
+
 					 //word movers waiting on starting line
 					   	for (int i=0;i<noWords;i++) {
 					     		try {
@@ -159,6 +160,7 @@ public class TypingTutorApp {
 									e1.printStackTrace();
 								}
 					    }
+<<<<<<< HEAD
 							//HungryWordMovers waiting on starting line
 							try {
 							if (HWords.get(0).isAlive())	{
@@ -168,6 +170,19 @@ public class TypingTutorApp {
 							e1.printStackTrace();
 						}
 					textEntry.setText("");//clear text Area before restarting game
+=======
+						
+						//HUngryWordMover waiting on starting line
+						try{
+							if (HWords.get(0).isAlive())	{
+								HWords.get(0).join();}
+						}catch(InterruptedException e1){
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						textEntry.setText("");//clear text Area before restarting game
+>>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 				}
 		});  //finish addActionListener
 					
@@ -216,11 +231,22 @@ public class TypingTutorApp {
 			words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit,false);
 		}
 
+<<<<<<< HEAD
 		// Create HungryWord (FallingWord)
 		HungryWords.add(new FallingWord(dict.getNewHungryWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit-40,true));
 
 		HWords = new ArrayList<>();
 		//create thread to move HungryWords
+=======
+
+		// initialize shared array of current words with the words for this game
+
+		//Create a hungryWord from the FallingWord class
+		HungryWords.add(new FallingWord(dict.getNewHungryWord(),gameWindow.getValidXpos(),gameWindow.getValidHeight(),yLimit,xLimit-40,true));
+		
+		HWords = new ArrayList<>();
+		//create thread to move HungryWord
+>>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 		HWords.add(new HungryWordMover(HungryWords.get(0),dict,score,startLatch,done,pause));
 
 		//create threads to move FallingWord them
@@ -228,7 +254,11 @@ public class TypingTutorApp {
 	    		wrdShft[i] = new WordMover(words,words[i],dict,HungryWords.get(0),score,startLatch,done,pause);
 	    }
 
+<<<<<<< HEAD
 		//HungryWordMovers waiting on starting line 
+=======
+		//HungryWordMover waiting on starting line 
+>>>>>>> 9bb0a9a4c19bca499c7a6a9645fceefd281eab30
 		(HWords.get(0)).start();
 
         //word movers waiting on starting line 
